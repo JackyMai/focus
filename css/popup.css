@@ -1,3 +1,24 @@
 html, body {
     width: 600px;
 }
+
+#data-module {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#top-visited-websites-graph{
+}
+
+#top-websites-canvas{
+    width: 430px !important;
+    height: 430px !important;
+    margin-left: 12%;
+    margin-right: 12%;
+}
+
+#date-select-box{
+    font-size: 14px;
+}
