@@ -22,7 +22,7 @@
              requestValue++;
            }
            if (!requestValue){
-            loadPieChart(website_count_dictionary);
+            loadPieChart();
            }
      });
 
@@ -36,15 +36,32 @@
             }
         }
         if (!--requestValue){
-            loadPieChart(website_count_dictionary);
+            loadPieChart();
         }
     };
 
     $("#top-visited-websites-table").text()
 
-    function loadPieChart(website_count_dictionary){
-
-        website_count_dictionary = website_count_dictionary;
+    function loadPieChart(){
+		
+		var sortedList = [];
+		for (var key in website_count_dictionary) {
+ 			 sortedList.push([ key, website_count_dictionary[key] ])
+		}
+		sortedList.sort(function(firstValue, secondValue) {
+    		return secondValue[1] - firstValue[1];
+		});
+		
+		if (sortedList.length > 10){
+			sortedList = sortedList.splice(0,10);
+		}
+		
+		var sortedKeys = [];
+		var sortedValues = [];
+		for (var i = 0; i < sortedList.length; i++) {
+ 			sortedKeys.push(sortedList[i][0]);
+			sortedValues.push(sortedList[i][1]);
+		}
 
         var ctx = document.getElementById("top-websites-canvas").getContext('2d');
         var chart = new Chart(ctx, {
@@ -53,12 +70,12 @@
 
             // The data for our dataset
             data: {
-                labels: Object.keys(website_count_dictionary),
+                labels: sortedKeys,
                 datasets: [{
                     label: "My First dataset",
-                    backgroundColor: ["#6ef79c", "#A8e4f0", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#D6D65C", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
-                    borderColor: ["#6ef79c", "#A8e4f0", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#D6D65C", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
-                    data: Object.values(website_count_dictionary),
+                    backgroundColor: ["#6ef79c", "#A8e4f0", "#D6D65C", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
+                    borderColor: ["#6ef79c", "#A8e4f0", "#D6D65C", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
+                    data: sortedValues
                 }]
             },
 
