@@ -1,15 +1,13 @@
 // Initialised variables
 var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
-website_count_dictionary = {}; // dictionary of all the websites visited & their count
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
-
 
 // Update graph on set up
 updateHistory(startHistoryTime);
 
 // Searches chrome history for the websites visited since the start time
 function updateHistory(startTime){
-    console.log(startTime);
+    website_count_dictionary = {}; // dictionary of all the websites visited & their count
     var visits = chrome.history.search({
         'text': '',
         'startTime': startTime
@@ -117,9 +115,11 @@ function sortList(){
 	return sortedList;
 }
 
+// Function to update the graph when the drop down changes the date range
 $("#date-drop-down-select").change(function() {
     var selected = $("#date-drop-down-select").find(":selected").val();
 
+    // Update the time range depending on which drop down was selected
     if (selected == "past-work-cycle"){
        range = (new Date).getTime() - 1000 * 60 * 60 * (5/6);
     } else if (selected == "past-day"){
@@ -129,6 +129,7 @@ $("#date-drop-down-select").change(function() {
     } else {
         range = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
     }
+    // Re-calculate the history values
     updateHistory(range);
 
 });
