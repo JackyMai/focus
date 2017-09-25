@@ -77,19 +77,19 @@ function loadPieChart(){
                 data: values
             }]
         },
-
-        // Configuration options go here
         options: {}
     });
 }
 
 // This function loops through the dictionary and sorts the list in descending order of the top 10 domains
 function sortList(){
+	
 	// initialise the dictionary as an array, so it can be sorted
 	var sortedList = [];
 	for (var key in website_count_dictionary) {
 		 sortedList.push([ key, website_count_dictionary[key] ])
 	}
+	
 	// sort the array, comparing the values and arranging them biggest -> smallest
 	sortedList.sort(function(firstValue, secondValue) {
 		return secondValue[1] - firstValue[1];
