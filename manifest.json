@@ -16,7 +16,7 @@
         "history"
     ],
     "content_scripts": [ {
-        "js": [ "jquery-3.2.1.min.js", "Chart.min.js", "website-history.js" ],
+        "js": [ "js/jquery-3.2.1.min.js", "js/Chart.min.js", "js/website-history.js" ],
         "matches": [ "http://*/*", "https://*/*"]
     }]
 }
