@@ -1,40 +1,47 @@
 // Initialised variables
-var startTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
+var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
 website_count_dictionary = {}; // dictionary of all the websites visited & their count
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
 
+
+// Update graph on set up
+updateHistory(startHistoryTime);
+
 // Searches chrome history for the websites visited since the start time
-var visits = chrome.history.search({
-	'text': '',
-    'startTime': startTime
-}, function(historyItems) { // returns various HistoryItems
-	
-	// loops through each history item, stores the URL and get's the visits to that URL
-	for (var i = 0; i < historyItems.length; ++i) {
-	    
-		// gets the URL and splits it to just the Domain name
-		var url = historyItems[i].url;
-	    var url_array = url.split("/");
-	    website_count_dictionary[url_array[2]] = 0; // intialises the URL domain name in the dictionary
-		
-		// creates the callback function for chrome's getVisits() that's performed on each URL
-	    var processVisitsWithUrl = function(url) {
-	    	return function(visitItems) {
-	        	processVisits(url, visitItems);
-	      	};
-	    };
-	    chrome.history.getVisits({url: url}, processVisitsWithUrl(url));
-	    requestValue++;
-	}
-	
-	// loads the pie chart if all the requests are complete
-   	if (!requestValue){
-    	loadPieChart();
-   	}
- });
+function updateHistory(startTime){
+    console.log(startTime);
+    var visits = chrome.history.search({
+        'text': '',
+        'startTime': startTime
+    }, function(historyItems) { // returns various HistoryItems
+
+        // loops through each history item, stores the URL and get's the visits to that URL
+        for (var i = 0; i < historyItems.length; ++i) {
+
+            // gets the URL and splits it to just the Domain name
+            var url = historyItems[i].url;
+            var url_array = url.split("/");
+            website_count_dictionary[url_array[2]] = 0; // intialises the URL domain name in the dictionary
+
+            // creates the callback function for chrome's getVisits() that's performed on each URL
+            var processVisitsWithUrl = function(url) {
+                return function(visitItems) {
+                    processVisits(url, visitItems, startTime);
+                };
+            };
+            chrome.history.getVisits({url: url}, processVisitsWithUrl(url));
+            requestValue++;
+        }
+
+        // loads the pie chart if all the requests are complete
+        if (!requestValue){
+            loadPieChart();
+        }
+     });
+ }
 
 // This function is used by Chrome's getVisits, and increments the number of visits if the time is past the startTime
-var processVisits = function(url, visitItems){
+var processVisits = function(url, visitItems, startTime){
 	// loops through all the visit items
 	for (var i=0; i<visitItems.length; i++){
 		// gets the time the URL was visited, and increments the count if it was visited after the startTime
@@ -55,7 +62,8 @@ var processVisits = function(url, visitItems){
 function loadPieChart(){
 	
 	var sortedList = sortList();
-	
+	console.log(sortedList);
+
 	// get the keys and values to use within the chart, by looping through the sorted list
 	var keys = [];
 	var values = [];
@@ -63,9 +71,15 @@ function loadPieChart(){
 		keys.push(sortedList[i][0]);
 		values.push(sortedList[i][1]);
 	}
+
+	$('#top-websites-canvas').remove();
+    $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
 	
 	// get the chart element and set the values for it
-    var ctx = document.getElementById("top-websites-canvas").getContext('2d');
+    var canvas = document.getElementById("top-websites-canvas");
+    var ctx = canvas.getContext('2d');
+
+
     var chart = new Chart(ctx, {
         type: 'pie', // create a pie chart
         data: { // The data and colour is initialised for the chart
@@ -102,3 +116,19 @@ function sortList(){
 	
 	return sortedList;
 }
+
+$("#date-drop-down-select").change(function() {
+    var selected = $("#date-drop-down-select").find(":selected").val();
+
+    if (selected == "past-work-cycle"){
+       range = (new Date).getTime() - 1000 * 60 * 60 * (5/6);
+    } else if (selected == "past-day"){
+        range = (new Date).getTime() - 1000 * 60 * 60 * 24;
+    }else if (selected == "past-week"){
+        range = (new Date).getTime() - 1000 * 60 * 60 * 24 * 7;;
+    } else {
+        range = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
+    }
+    updateHistory(range);
+
+});

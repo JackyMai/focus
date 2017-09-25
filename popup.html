@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Focus</title>
 	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
@@ -29,18 +29,15 @@
             <canvas id="top-websites-canvas"></canvas>
         </div>
         <div id="date-select-box">
-            <div class="radio">
-                <label><input type="radio" name="optradio">Past Work Cycle</label>
+            <div class="select">
+                <select id="date-drop-down-select">
+                    <option id="past-work-cycle-range" value="past-work-cycle">Past Work Cycle</option>
+                    <option id="past-day-range" value="past-day">Past Day</option>
+                    <option id="past-week-range" value="past-week">Past Week</option>
+                    <option id="past-month-range" value="past-month">Past Month</option>
+                </select>
             </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Past Day</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio">Past Week</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" name="optradio" >Past Month</label>
-            </div>
+
         </div>
     </section>
 

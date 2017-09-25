@@ -13,11 +13,12 @@ html, body {
 }
 
 #top-websites-canvas{
-    width: 450px !important;
-    height: 450px !important;
+    width: 430px !important;
+    height: 430px !important;
     margin-left: 12%;
     margin-right: 12%;
 }
 
 #date-select-box{
+    font-size: 14px;
 }
