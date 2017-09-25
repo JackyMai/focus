@@ -15,5 +15,8 @@
     "permissions": [
         "history"
     ],
-    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+    "content_scripts": [ {
+        "js": [ "jquery-3.2.1.min.js", "Chart.min.js", "website-history.js" ],
+        "matches": [ "http://*/*", "https://*/*"]
+    }]
 }

@@ -1,6 +1,7 @@
     var time = (new Date).getTime() - 1000 * 60 * 60 * (5/6);
 
     website_count_dictionary = {};
+    var requestValue = 0;
 
     var visits = chrome.history.search({
         'text': '',
@@ -18,11 +19,12 @@
                };
              };
              chrome.history.getVisits({url: url}, processVisitsWithUrl(url));
+             requestValue++;
            }
-
-            console.log(website_count_dictionary);
+           if (!requestValue){
+            loadPieChart(website_count_dictionary);
+           }
      });
-
 
     var processVisits = function(url, visitItems){
         for (var i=0; i<visitItems.length; i++){
@@ -30,10 +32,38 @@
             // To do: check the time falls within the time frame
             if (visitTime > time){
                 var url_array = url.split("/");
-                console.log(url);
-                website_count_dictionary[url_array[2]]++;
+                website_count_dictionary[url_array[2]] = website_count_dictionary[url_array[2]] + 1;
             }
+        }
+        if (!--requestValue){
+            loadPieChart(website_count_dictionary);
         }
     };
 
-//    $("#top-visited-websites-table").text()
+    $("#top-visited-websites-table").text()
+
+    function loadPieChart(website_count_dictionary){
+
+        website_count_dictionary = website_count_dictionary;
+
+        var ctx = document.getElementById("top-websites-canvas").getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+
+            // The data for our dataset
+            data: {
+                labels: Object.keys(website_count_dictionary),
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: ["#6ef79c", "#A8e4f0", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#D6D65C", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
+                    borderColor: ["#6ef79c", "#A8e4f0", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#D6D65C", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
+                    data: Object.values(website_count_dictionary),
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
+    }
