@@ -8,20 +8,39 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
     <link rel="stylesheet" href="css/popup.css">
+
+
 </head>
 <body>
 
     <nav class="navbar is-primary">
         <div class="navbar-brand">
-            <a class="navbar-item" href="http://bulma.io">
-                <img src="http://bulma.io/images/bulma-logo-white.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+            <a class="navbar-item" >
+               <h1>FOCUS</h1>
             </a>
         </div>
     </nav>
 
     <section id="data-module" class="section">
-        <div id="top-visited-websites-table" class="container">
+        <div id="top-visited-websites-graph" class="container">
+            <div>
+                    Top 10 Websites Visited
+            </div>
             <canvas id="top-websites-canvas"></canvas>
+        </div>
+        <div id="date-select-box">
+            <div class="radio">
+                <label><input type="radio" name="optradio">Past Work Cycle</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Past Day</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio">Past Week</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="optradio" >Past Month</label>
+            </div>
         </div>
     </section>
 

@@ -72,8 +72,8 @@ function loadPieChart(){
             labels: keys,
             datasets: [{
                 label: "My First dataset",
-                backgroundColor: ["#6ef79c", "#A8e4f0", "#D6D65C", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
-                borderColor: ["#6ef79c", "#A8e4f0", "#D6D65C", "#e6b3e6", "#FF6E6E", "#FFAE1A", "#FFF991", "#928EB1", "#F0B892", "#FFD1D1"],
+                backgroundColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
+                borderColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
                 data: values
             }]
         },
