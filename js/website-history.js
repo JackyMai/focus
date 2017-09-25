@@ -44,18 +44,22 @@
 
     function loadPieChart(){
 		
+		// initialise the dictionary as an array, so it can be sorted
 		var sortedList = [];
 		for (var key in website_count_dictionary) {
  			 sortedList.push([ key, website_count_dictionary[key] ])
 		}
+		// sort the array, comparing the values and arranging them biggest -> smallest
 		sortedList.sort(function(firstValue, secondValue) {
     		return secondValue[1] - firstValue[1];
 		});
 		
+		// splice the list to only be top 10, incase more are shown
 		if (sortedList.length > 10){
 			sortedList = sortedList.splice(0,10);
 		}
 		
+		// get the keys and values to use within the chart, by looping through the sorted list
 		var sortedKeys = [];
 		var sortedValues = [];
 		for (var i = 0; i < sortedList.length; i++) {
@@ -67,7 +71,6 @@
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'pie',
-
             // The data for our dataset
             data: {
                 labels: sortedKeys,
