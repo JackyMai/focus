@@ -29,6 +29,26 @@
     </section>
     <div class="bd-callout is-primary">
         <a id="cycle-btn" class="button is-primary">Start</a>
+        <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+                <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu4">
+                <span>Ambient Sound</span>
+                <span class="icon is-small">
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <div class="dropdown-content">
+                    <div class="dropdown-item">
+                        <a id="ambient-rain" class="dropdown-item">Rain</a>
+                        <audio id="rain-audio">
+                            <source src="sound/rain-02.mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </body>
 </html>
