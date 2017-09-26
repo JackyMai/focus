@@ -1,3 +1,53 @@
+var workTime = 10;
+var main = "";
+var showInput = true;
+
+var startVal = "Start";
+
+var loadTimer = false;
+var timer = "00:00";
+var goal = "";
+
+// When extension installed, open options page at once
+chrome.runtime.onInstalled.addListener(function () {
+    alert("Focus installed.");
+});
+
+function newTimer() {
+    timer = "00:00";
+    setTimer();
+}
+
+function setTimer() {
+    if (loadTimer) {
+        var arr = timer.split(":");
+        var min = arr[0];
+        var sec = arr[1];
+
+        sec++;
+
+        if (sec == 60) {
+            sec = "00";
+            min++;
+            if (min < 10) min = "0" + min;
+        } else if (sec < 10) {
+            sec = "0" + sec;
+        }
+        timer = min + ":" + sec;
+
+        //alert((workTime - min));
+        if (!(workTime - min)) loadTimer = false;
+
+        setTimeout(setTimer, 1000);
+    }
+    else {
+        chrome.browserAction.setBadgeText({text: ''});
+        timer = "00:00";
+    }
+}
+
+
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         var audioID = request.audioID;
