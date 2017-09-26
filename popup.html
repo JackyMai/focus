@@ -3,30 +3,44 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Focus</title>
+	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
     <link rel="stylesheet" href="css/popup.css">
+
+
 </head>
 <body>
-    <script type="text/javascript" src="js/work-break.js"></script>
+
     <nav class="navbar is-primary">
         <div class="navbar-brand">
-            <a class="navbar-item" href="http://bulma.io">
-                <img src="http://bulma.io/images/bulma-logo-white.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+            <a class="navbar-item" >
+               <h1>FOCUS</h1>
             </a>
         </div>
     </nav>
-    <section class="section">
-        <div class="container">
-        <h1 class="title">
-            Hello World
-        </h1>
-        <p class="subtitle">
-            My first extension with <strong>Bulma</strong>!
-        </p>
+
+    <section id="data-module" class="section">
+        <div id="top-visited-websites-graph" class="container">
+            <div>
+                    Top 10 Websites Visited
+            </div>
+            <canvas id="top-websites-canvas"></canvas>
+        </div>
+        <div id="date-select-box">
+            <div class="select">
+                <select id="date-drop-down-select">
+                    <option id="past-work-cycle-range" value="past-work-cycle">Past Work Cycle</option>
+                    <option id="past-day-range" value="past-day">Past Day</option>
+                    <option id="past-week-range" value="past-week">Past Week</option>
+                    <option id="past-month-range" value="past-month">Past Month</option>
+                </select>
+            </div>
+
         </div>
     </section>
+
     <div class="bd-callout is-primary">
         <a id="cycle-btn" class="button is-primary">Start</a>
         <div class="dropdown is-hoverable">
@@ -49,4 +63,11 @@
         </div>
     </div>
   </body>
+
+  <!-- Initialised the various scripts used-->
+  <script type="text/javascript" src="js/Chart.min.js"></script>
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/work-break.js"></script>
+  <script type="text/javascript" src="js/website-history.js"></script>
+
 </html>

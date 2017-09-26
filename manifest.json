@@ -14,5 +14,12 @@
     },
     "background": {
         "page": "background.html"
-    }
+    },
+    "permissions": [
+        "history"
+    ],
+    "content_scripts": [{
+        "js": [ "js/jquery-3.2.1.min.js", "js/Chart.min.js", "js/website-history.js" ],
+        "matches": [ "http://*/*", "https://*/*"]
+    }]
 }
