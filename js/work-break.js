@@ -1,65 +1,76 @@
+const MIN_WORK_PERIOD = 10;
+
+// connect to background
 var bg = chrome.extension.getBackgroundPage();
 
+
+// check  global variables and refresh the window when opening
 $(function(){
     refresh();
+    if (bg.loadTimer) showTimer(); // if the timer is on, show it
 })
 
 
 function refresh() {
+    // refresh the main view
     $('#work-time').val(bg.workTime);
     $('#main-interface').html(bg.main);
+    $('#cycle-btn').html(bg.toggleVal);
 
-    $('#cycle-btn').html(bg.startVal);
-
-    if (!bg.loadTimer) $('#time-input').show();
-    else $('#time-input').hide();
-
-
+    // refresh footer toolbar, decide what to show and what to hide
     if (bg.loadTimer) {
         $('#timer').show();
         $('#goal').show();
+        $('#time-input').hide();
+        $('#timer').html(bg.timer);
+        $('#goal').html("Goal: " + bg.workTime + ":00");
     } else {
         $('#timer').hide();
         $('#goal').hide();
+        $('#time-input').show();
     }
-
-    $('#timer').html(bg.timer);
-    $('#goal').html("Goal: " + bg.workTime + ":00");
 }
 
 
+// when getting work time input, check the value and set a limit
 function checkTimeInput () {
     var val = document.getElementById('work-time').value;
-    document.getElementById('work-time').value = val >= 10 ? val : 10;
+    document.getElementById('work-time').value = val >= MIN_WORK_PERIOD ? val : MIN_WORK_PERIOD;
 }
 
 
+// responses to toggle button
 function toggleCycle() {
     var startBtn = document.getElementById('cycle-btn');
     var status = startBtn.innerHTML;
 
     if (status == "Start") {
-        bg.workTime = document.getElementById('work-time').value;
-
-        bg.startVal = "Stop";// can be changed to any icon
-        bg.main = "Working...";// timer
-        chrome.browserAction.setBadgeText({text: 'ON'}); //change the icon
-
-        bg.loadTimer = true;
+        // change appearance
+        bg.toggleVal = "Stop"; // toggle button appearance, can use any icon
+        bg.main = "Working...";
+        chrome.browserAction.setBadgeText({text: 'ON'}); //change the badge
         
+        // change variables and take action
+        bg.workTime = document.getElementById('work-time').value; //get work time input and send it to background
+        bg.loadTimer = true;
         bg.newTimer();
         showTimer();
 
-    } else if (status == "Stop") {
-        bg.startVal = "Summary";
-        bg.main = "Stoped"; 
-        
+    } else if (status == "Stop") { // force to stop
+        // change appearance
+        bg.toggleVal = "Summary";
+        bg.main = "Work Stoped"; 
+
+        // change variables and take action
         bg.loadTimer = false;
-        bg.clearTimer();
+        bg.stopTimer();
 
     } else {
-        bg.startVal = "Start";
+        // todo: change appearance
+        bg.toggleVal = "Start";
         bg.main = "Summary Page"; 
+
+        // todo: change variables
     }
 
     refresh();
@@ -72,11 +83,9 @@ function showTimer() {
 function changeTimer() {
     if (bg.loadTimer) {
         refresh();
-        setTimeout(changeTimer, 1000);
+        setTimeout(changeTimer, 100);
     }
     else {
-        bg.startVal = "Summary";
-        bg.main = "Work done";
         refresh();
     }
 }

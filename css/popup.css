@@ -22,3 +22,17 @@ html, body {
 #date-select-box{
     font-size: 14px;
 }
+
+#bottom-toolbar {
+    position:fixed;
+    bottom:0;
+    width:100%;
+    text-align: center;
+    /*height:60px;*/
+    /* background:#6cf; */
+}
+
+#work-time {
+    width: 15%;
+    text-align: center;
+}

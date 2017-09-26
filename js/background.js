@@ -1,25 +1,29 @@
+// global variables
 var workTime = 10;
 var main = "";
 var showInput = true;
-
 var startVal = "Start";
-
 var loadTimer = false;
-var timer = "00:00";
+var timer = "";
 var goal = "";
 
-// When extension installed, open options page at once
+
+// when extension installed, open options page at once
 chrome.runtime.onInstalled.addListener(function () {
     alert("Focus installed.");
 });
 
+
+// set a new timer
 function newTimer() {
-    timer = "00:00";
+    timer = "00:00"; // initialize the timer
     setTimer();
 }
 
+
 function setTimer() {
     if (loadTimer) {
+        // handle the time
         var arr = timer.split(":");
         var min = arr[0];
         var sec = arr[1];
@@ -35,18 +39,30 @@ function setTimer() {
         }
         timer = min + ":" + sec;
 
-        //alert((workTime - min));
+        // update status
         if (!(workTime - min)) loadTimer = false;
 
         setTimeout(setTimer, 1000);
     }
-    else {
+    
+    // stop naturally
+    else { 
         chrome.browserAction.setBadgeText({text: ''});
         timer = "00:00";
+        startVal = "Summary";
+        main = "Work done";
+
+        // todo: send done notification
     }
 }
 
 
+// force to stop
+function stopTimer() {
+    chrome.browserAction.setBadgeText({text: ''});
+
+    // todo: send stop notification
+}
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
