@@ -16,8 +16,12 @@ function togglePlay(event) {
 
 function attachListeners() {
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
-    document.getElementById('ambient-storm').addEventListener('click', togglePlay);
-    document.getElementById('ambient-birds').addEventListener('click', togglePlay);
+
+    var dropdownItems = document.getElementById('ambient-dropdown').children;
+    for (var i = 0; i < dropdownItems.length; i++) {
+        var ambientID = dropdownItems[i].id;
+        document.getElementById(ambientID).addEventListener('click', togglePlay);
+    }
 }
 
 window.addEventListener('load', attachListeners);
