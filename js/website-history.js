@@ -105,14 +105,8 @@ function loadPieChart(){
         options: {
           tooltips: {
             bodyFontSize: 20, //TODO: not working because of generateLegend(), but usually sets the font size of the hover text
-          }
-          // TODO: remove, if legend on the left > tooltips font size
-          , legend: {
-          //   labels: {
-          //       fontSize: 16, // sets the font size
-          //       padding: 10
-          //   },
-          //   position: 'right',
+          },
+          legend: {
             display: false
           }
         }
