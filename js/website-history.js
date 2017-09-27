@@ -66,11 +66,12 @@ function loadPieChart(){
 	var keys = [];
 	var values = [];
 	for (var i = 0; i < sortedList.length; i++) {
-		keys.push(sortedList[i][0]);
+    var rank = i + 1;
+		keys.push("  " + rank + ": " + sortedList[i][0]);
 		values.push(sortedList[i][1]);
 	}
 
-	$('#top-websites-canvas').remove();
+	  $('#top-websites-canvas').remove();
     $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
 
 	// get the chart element and set the values for it
@@ -90,18 +91,23 @@ function loadPieChart(){
         },
         options: {
           tooltips: {
-            bodyFontSize: 20 // sets the font size of the hover text
-          },
-          legend: {
-            labels: {
-                fontColor: 'black', // sets the legend font colour
-                fontSize: 18, // sets the font size
-                padding: 20
-            },
-            position: 'right'
+            bodyFontSize: 20, //TODO: not working because of generateLegend(), but usually sets the font size of the hover text
           }
+          // TODO: remove, if legend on the left > tooltips font size
+          // , legend: {
+          //   labels: {
+          //       fontSize: 16, // sets the font size
+          //       padding: 10
+          //   },
+          //   position: 'right',
+          //   display: false
+          // }
         }
     });
+
+    // generates legend to set to div element
+    document.getElementById('js-legend').innerHTML = chart.generateLegend();
+
 }
 
 // This function loops through the dictionary and sorts the list in descending order of the top 10 domains

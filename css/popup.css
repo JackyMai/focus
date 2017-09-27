@@ -2,6 +2,21 @@ html, body {
     width: 600px;
 }
 
+.chart-legend li span{
+    display: inline-block;
+    /*box-sizing: border-box;*/
+    width: 40px;
+    height: 16px;
+}
+
+#js-legend {
+  position: absolute;
+  margin-right: 0px;
+  right: 15px;
+  top: 130px;
+  font-size: 16px;
+}
+
 #data-module {
     padding: 10px;
     text-align: center;
@@ -13,14 +28,20 @@ html, body {
 }
 
 #top-websites-canvas{
-    width: 430px !important;
-    height: 430px !important;
-    margin-left: 12%;
-    margin-right: 12%;
+    width: 300px !important;
+    height: 300px !important;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 #date-select-box{
     font-size: 14px;
+    /*margin-right: 40px;*/
+    position: absolute;
+    top: 380px;
+    right: 0;
+    width: 200px;
+    height: 100px;
 }
 
 #bottom-toolbar {
