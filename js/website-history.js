@@ -38,6 +38,19 @@ function updateHistory(startTime){
      });
  }
 
+ var colours = [
+   "#5555c1", // dark blue
+   "#8585e0", // purple
+   "#e6b3e6", // pink
+   "#ff80aa", // dark pink
+   "#ff9966", // orange
+   "#ffd69b", // yellow/ orange
+   "#fff19b", // yellow
+   "#8be6a7", //  teal
+   "#57d598", // dark green
+   "#A8e4f0", // light blue
+ ]
+
 // This function is used by Chrome's getVisits, and increments the number of visits if the time is past the startTime
 var processVisits = function(url, visitItems, startTime){
 	// loops through all the visit items
@@ -84,8 +97,8 @@ function loadPieChart(){
             labels: keys,
             datasets: [{
                 label: "My First dataset",
-                backgroundColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
-                borderColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
+                backgroundColor: colours,
+                borderColor: colours,
                 data: values
             }]
         },
