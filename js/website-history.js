@@ -95,8 +95,10 @@ function loadPieChart(){
           legend: {
             labels: {
                 fontColor: 'black', // sets the legend font colour
-                fontSize: 18 // sets the font size
-            }
+                fontSize: 18, // sets the font size
+                padding: 20
+            },
+            position: 'right'
           }
         }
     });
