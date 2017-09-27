@@ -4,7 +4,6 @@ html, body {
 
 .chart-legend li span{
     display: inline-block;
-    /*box-sizing: border-box;*/
     width: 40px;
     height: 16px;
 }
@@ -13,7 +12,7 @@ html, body {
   position: absolute;
   margin-right: 0px;
   right: 15px;
-  top: 130px;
+  top: 180px;
   font-size: 16px;
 }
 
@@ -22,6 +21,13 @@ html, body {
     text-align: center;
     font-weight: bold;
     font-size: 24px;
+}
+
+#data-module p {
+    padding: 0;
+    text-align: center;
+    font-weight: normal;
+    font-size: 18px;
 }
 
 #top-visited-websites-graph{
@@ -36,9 +42,8 @@ html, body {
 
 #date-select-box{
     font-size: 14px;
-    /*margin-right: 40px;*/
     position: absolute;
-    top: 380px;
+    top: 440px;
     right: 0;
     width: 200px;
     height: 100px;
