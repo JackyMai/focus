@@ -38,6 +38,19 @@ function updateHistory(startTime){
      });
  }
 
+ var colours = [
+   "#5555c1", // dark blue
+   "#8585e0", // purple
+   "#e6b3e6", // pink
+   "#ff80aa", // dark pink
+   "#ff9966", // orange
+   "#ffd69b", // yellow/ orange
+   "#fff19b", // yellow
+   "#8be6a7", //  teal
+   "#57d598", // dark green
+   "#A8e4f0", // light blue
+ ]
+
 // This function is used by Chrome's getVisits, and increments the number of visits if the time is past the startTime
 var processVisits = function(url, visitItems, startTime){
 	// loops through all the visit items
@@ -49,7 +62,7 @@ var processVisits = function(url, visitItems, startTime){
             website_count_dictionary[url_array[2]]++;
         }
     }
-    
+
 	// decreases the requests count
 	if (!--requestValue){
         loadPieChart(); // loads the pie chart if all the requests are complete
@@ -58,7 +71,7 @@ var processVisits = function(url, visitItems, startTime){
 
 // This function loads the data onto the piechart
 function loadPieChart(){
-	
+
 	var sortedList = sortList();
 	console.log(sortedList);
 
@@ -66,17 +79,17 @@ function loadPieChart(){
 	var keys = [];
 	var values = [];
 	for (var i = 0; i < sortedList.length; i++) {
-		keys.push(sortedList[i][0]);
+    var rank = i + 1;
+		keys.push("  " + rank + ": " + sortedList[i][0]);
 		values.push(sortedList[i][1]);
 	}
 
-	$('#top-websites-canvas').remove();
+	  $('#top-websites-canvas').remove();
     $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
-	
+
 	// get the chart element and set the values for it
     var canvas = document.getElementById("top-websites-canvas");
     var ctx = canvas.getContext('2d');
-
 
     var chart = new Chart(ctx, {
         type: 'pie', // create a pie chart
@@ -84,34 +97,45 @@ function loadPieChart(){
             labels: keys,
             datasets: [{
                 label: "My First dataset",
-                backgroundColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
-                borderColor: ["#4d4dff", "#A8e4f0", "#e6b3e6", "#ff80aa", "#ff9966", "#66ccff", "#80ffaa", "#cc99ff", "#8585e0", "#99ccff"],
+                backgroundColor: colours,
+                borderColor: colours,
                 data: values
             }]
         },
-        options: {}
+        options: {
+          tooltips: {
+            bodyFontSize: 20, //TODO: not working because of generateLegend(), but usually sets the font size of the hover text
+          },
+          legend: {
+            display: false
+          }
+        }
     });
+
+    // generates legend to set to div element
+    document.getElementById('js-legend').innerHTML = chart.generateLegend();
+
 }
 
 // This function loops through the dictionary and sorts the list in descending order of the top 10 domains
 function sortList(){
-	
+
 	// initialise the dictionary as an array, so it can be sorted
 	var sortedList = [];
 	for (var key in website_count_dictionary) {
 		 sortedList.push([ key, website_count_dictionary[key] ])
 	}
-	
+
 	// sort the array, comparing the values and arranging them biggest -> smallest
 	sortedList.sort(function(firstValue, secondValue) {
 		return secondValue[1] - firstValue[1];
 	});
-	
+
 	// splice the list to only be top 10, incase more are shown
 	if (sortedList.length > 10){
 		sortedList = sortedList.splice(0,10);
 	}
-	
+
 	return sortedList;
 }
 
