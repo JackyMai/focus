@@ -89,11 +89,13 @@ function loadPieChart(){
             }]
         },
         options: {
+          tooltips: {
+            bodyFontSize: 20 // sets the font size of the hover text
+          },
           legend: {
             labels: {
-                // This more specific font property overrides the global property
-                fontColor: 'black',
-                fontSize: 18
+                fontColor: 'black', // sets the legend font colour
+                fontSize: 18 // sets the font size
             }
           }
         }
