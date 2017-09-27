@@ -49,7 +49,7 @@ var processVisits = function(url, visitItems, startTime){
             website_count_dictionary[url_array[2]]++;
         }
     }
-    
+
 	// decreases the requests count
 	if (!--requestValue){
         loadPieChart(); // loads the pie chart if all the requests are complete
@@ -58,7 +58,7 @@ var processVisits = function(url, visitItems, startTime){
 
 // This function loads the data onto the piechart
 function loadPieChart(){
-	
+
 	var sortedList = sortList();
 	console.log(sortedList);
 
@@ -72,11 +72,10 @@ function loadPieChart(){
 
 	$('#top-websites-canvas').remove();
     $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
-	
+
 	// get the chart element and set the values for it
     var canvas = document.getElementById("top-websites-canvas");
     var ctx = canvas.getContext('2d');
-
 
     var chart = new Chart(ctx, {
         type: 'pie', // create a pie chart
@@ -89,29 +88,37 @@ function loadPieChart(){
                 data: values
             }]
         },
-        options: {}
+        options: {
+          legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: 'black',
+                fontSize: 18
+            }
+          }
+        }
     });
 }
 
 // This function loops through the dictionary and sorts the list in descending order of the top 10 domains
 function sortList(){
-	
+
 	// initialise the dictionary as an array, so it can be sorted
 	var sortedList = [];
 	for (var key in website_count_dictionary) {
 		 sortedList.push([ key, website_count_dictionary[key] ])
 	}
-	
+
 	// sort the array, comparing the values and arranging them biggest -> smallest
 	sortedList.sort(function(firstValue, secondValue) {
 		return secondValue[1] - firstValue[1];
 	});
-	
+
 	// splice the list to only be top 10, incase more are shown
 	if (sortedList.length > 10){
 		sortedList = sortedList.splice(0,10);
 	}
-	
+
 	return sortedList;
 }
 
