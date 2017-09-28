@@ -7,13 +7,6 @@ var loadTimer = false;
 var timer = "";
 var goal = "";
 
-
-// when extension installed, open options page at once
-chrome.runtime.onInstalled.addListener(function () {
-    alert("Focus installed.");
-});
-
-
 // set a new timer
 function newTimer() {
     timer = "00:00"; // initialize the timer

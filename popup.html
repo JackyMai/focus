@@ -4,15 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Focus</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
     <link rel="stylesheet" href="css/popup.css">
-
-
 </head>
 <body>
-
     <nav class="navbar is-primary">
         <div class="navbar-brand">
             <a class="navbar-item" >
@@ -24,15 +20,15 @@
     <section id="data-module" class="section">
         <div id="top-visited-websites-graph" class="container">
             <div>
-                    Top 10 Websites Visited
+                Top 10 Websites Visited
             </div>
             <p>Your top websites are ranked according to the number of visits.</p>
           </br>
             <canvas id="top-websites-canvas"></canvas>
         </div>
-      </section>
+    </section>
 
-      <section class="section">
+    <section class="section">
         <div id="js-legend" class="chart-legend"></div>
         <div id="date-select-box">
             <div class="select">
@@ -43,12 +39,7 @@
                     <option id="past-month-range" value="past-month">Past Month</option>
                 </select>
             </div>
-
         </div>
-    </section>
-
-    <section class="section">
-        <div id="main-interface" class="container"></div>
     </section>
 
     <div class="bd-callout is-primary" id="bottom-toolbar">
@@ -81,9 +72,8 @@
   </body>
 
   <!-- Initialised the various scripts used-->
-  <script type="text/javascript" src="js/Chart.min.js"></script>
-  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="lib/chart.min.js"></script>
+  <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="js/work-break.js"></script>
   <script type="text/javascript" src="js/website-history.js"></script>
-
 </html>

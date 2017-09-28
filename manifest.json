@@ -18,8 +18,14 @@
     "permissions": [
         "history"
     ],
-    "content_scripts": [{
-        "js": [ "js/jquery-3.2.1.min.js", "js/Chart.min.js", "js/website-history.js" ],
-        "matches": [ "http://*/*", "https://*/*"]
-    }]
+    "content_scripts": [
+        {
+            "js": [ 
+                "lib/jquery-3.2.1.min.js",
+                "lib/chart.min.js",
+                "js/website-history.js"
+                ],
+            "matches": [ "http://*/*", "https://*/*"]
+        }
+    ]
 }
