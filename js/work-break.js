@@ -23,7 +23,7 @@ function refresh() {
         $('#goal').show();
         $('#time-input').hide();
         $('#timer').html(bg.timer);
-        $('#goal').html("Goal: " + bg.workTime + ":00");
+        $('#goal').html(" / " + bg.workTime + ":00");
     } else {
         $('#timer').hide();
         $('#goal').hide();
