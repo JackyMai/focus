@@ -62,3 +62,8 @@ html, body {
     width: 15%;
     text-align: center;
 }
+
+.dropdown-menu {
+    top: auto;
+    bottom: 100%;
+}
