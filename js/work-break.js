@@ -93,15 +93,24 @@ function changeTimer() {
 function togglePlay(event) {
     var targetID = event.target.id;
     chrome.runtime.sendMessage({audioID: targetID}, function(response) {
-        console.log(response.farewell);
+        var ambientSound = document.getElementById(response.audioID);
+        if (response.audioPaused) {
+            ambientSound.classList.remove('is-active');
+        } else {
+            ambientSound.classList.add('is-active');
+        }
     });
 }
 
 function attachListeners() {
-    document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
-    document.getElementById('ambient-storm').addEventListener('click', togglePlay);
-    document.getElementById('ambient-birds').addEventListener('click', togglePlay);
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
+    document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
+
+    var dropdownItems = document.getElementById('ambient-dropdown').children;
+    for (var i = 0; i < dropdownItems.length; i++) {
+        var ambientID = dropdownItems[i].id;
+        document.getElementById(ambientID).addEventListener('click', togglePlay);
+    }
 }
 
 window.addEventListener('load', attachListeners);
