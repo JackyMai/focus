@@ -17,6 +17,8 @@ function refresh() {
     $('#main-interface').html(bg.main);
     $('#cycle-btn').html(bg.toggleVal);
 
+    $('#timer-progress').val(bg.past);
+
     // refresh footer toolbar, decide what to show and what to hide
     if (bg.loadTimer) {
         $('#timer').show();
@@ -24,10 +26,14 @@ function refresh() {
         $('#time-input').hide();
         $('#timer').html(bg.timer);
         $('#goal').html(" / " + bg.workTime + ":00");
+        $('#timer-progress').show();
+
     } else {
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();
+        $('#timer-progress').hide();
+
     }
 }
 
@@ -58,19 +64,12 @@ function toggleCycle() {
 
     } else if (status == "Stop") { // force to stop
         // change appearance
-        bg.toggleVal = "Summary";
+        bg.toggleVal = "Start";
         bg.main = "Work Stoped"; 
 
         // change variables and take action
         bg.loadTimer = false;
         bg.stopTimer();
-
-    } else {
-        // todo: change appearance
-        bg.toggleVal = "Start";
-        bg.main = "Summary Page"; 
-
-        // todo: change variables
     }
 
     refresh();

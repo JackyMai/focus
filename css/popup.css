@@ -49,10 +49,15 @@ html, body {
     height: 100px;
 }
 
-#bottom-toolbar {
+
+
+#extension-bottom {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+#bottom-toolbar {
     text-align: center;
     height: 37px;
     background: hsl(171, 100%, 41%);
@@ -95,4 +100,8 @@ html, body {
 
 #btns {
     float: right;
+}
+
+#timer-progress {
+    margin-bottom: 1px;
 }

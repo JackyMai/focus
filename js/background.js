@@ -2,13 +2,19 @@
 var workTime = 10;
 var main = "";
 var showInput = true;
-var startVal = "Start";
+var toggleVal = "Start";
 var loadTimer = false;
 var timer = "";
 var goal = "";
 
+var past = 0;
+
 // set a new timer
 function newTimer() {
+    //alert("new");
+    //max = workTimer*60; // work time in sec
+    //document.getElementById('timer-progress').max = max;
+
     timer = "00:00"; // initialize the timer
     setTimer();
 }
@@ -32,30 +38,40 @@ function setTimer() {
         }
         timer = min + ":" + sec;
 
+        // past time in percent
+        past = ((parseInt(min)*60 + parseInt(sec)) / (workTime*60))*100;
+
         // update status
-        if (!(workTime - min)) loadTimer = false;
+        if (!(workTime - min)) {
+            loadTimer = false;
+
+            // Send done notification
+            chrome.browserAction.setBadgeText({text: ''});
+            chrome.notifications.create({
+                type:     'basic',
+                iconUrl:  'icon/128.png',
+                title:    'Work Done',
+                message:  'It\'s time to relax!'});
+
+            toggleVal = "Start";
+            main = "Work done";
+        }
 
         setTimeout(setTimer, 1000);
     }
-    
-    // stop naturally
-    else { 
-        chrome.browserAction.setBadgeText({text: ''});
-        timer = "00:00";
-        startVal = "Summary";
-        main = "Work done";
-
-        // todo: send done notification
-    }
 }
 
-
-// force to stop
 function stopTimer() {
+    // Send terminated notification
     chrome.browserAction.setBadgeText({text: ''});
+    chrome.notifications.create({
+        type:     'basic',
+        iconUrl:  'icon/128.png',
+        title:    'Work Terminated',
+        message:  'Open FOCUS to start another work cycle!'});
 
-    // todo: send stop notification
 }
+
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {

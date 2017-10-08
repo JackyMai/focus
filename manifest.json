@@ -16,7 +16,8 @@
         "page": "background.html"
     },
     "permissions": [
-        "history"
+        "history",
+        "notifications"
     ],
     "content_scripts": [
         {
