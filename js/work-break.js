@@ -94,7 +94,12 @@ function changeTimer() {
 function togglePlay(event) {
     var targetID = event.target.id;
     chrome.runtime.sendMessage({audioID: targetID}, function(response) {
-        console.log(response.farewell);
+        var ambientSound = document.getElementById(response.audioID);
+        if (response.audioPaused) {
+            ambientSound.classList.remove('is-active');
+        } else {
+            ambientSound.classList.add('is-active');
+        }
     });
 }
 

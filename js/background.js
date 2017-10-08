@@ -61,9 +61,11 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         var audioID = request.audioID;
         var ambientSound = document.getElementById(audioID);
-        togglePlay(ambientSound);
-        sendResponse({farewell: "Toggled: " + audioID});
+        var paused = togglePlay(ambientSound);
+
+        sendResponse({audioID: request.audioID, audioPaused: paused});
     }
+
 )
 
 function togglePlay(ambientSound) {
@@ -72,4 +74,6 @@ function togglePlay(ambientSound) {
     } else {
         ambientSound.pause()
     }
+
+    return ambientSound.paused;
 }
