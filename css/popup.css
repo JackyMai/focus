@@ -55,6 +55,10 @@ html, body {
     background: hsl(171, 100%, 41%);
 }
 
+.dropdown-item {
+    text-align: left;
+}
+
 /* the input box*/
 #work-time { 
     width: 10%;
