@@ -69,19 +69,18 @@ function stopTimer() {
         iconUrl:  'icon/128.png',
         title:    'Work Terminated',
         message:  'Open FOCUS to start another work cycle!'});
-
 }
-
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         var audioID = request.audioID;
         var ambientSound = document.getElementById(audioID);
-        var paused = togglePlay(ambientSound);
+        if (request.clicked == true) {
+            togglePlay(ambientSound);
+        }
 
-        sendResponse({audioID: request.audioID, audioPaused: paused});
+        sendResponse({audioID: request.audioID, audioPaused: ambientSound.paused});
     }
-
 )
 
 function togglePlay(ambientSound) {
@@ -90,6 +89,4 @@ function togglePlay(ambientSound) {
     } else {
         ambientSound.pause()
     }
-
-    return ambientSound.paused;
 }
