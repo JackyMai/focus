@@ -3,20 +3,17 @@ const MIN_WORK_PERIOD = 10;
 // connect to background
 var bg = chrome.extension.getBackgroundPage();
 
-
-// check  global variables and refresh the window when opening
+// check global variables and refresh the window when opening
 $(function(){
     refresh();
     if (bg.loadTimer) showTimer(); // if the timer is on, show it
 })
-
 
 function refresh() {
     // refresh the main view
     $('#work-time').val(bg.workTime);
     $('#main-interface').html(bg.main);
     $('#cycle-btn').html(bg.toggleVal);
-
     $('#timer-progress').val(bg.past);
 
     // refresh footer toolbar, decide what to show and what to hide
@@ -27,23 +24,19 @@ function refresh() {
         $('#timer').html(bg.timer);
         $('#goal').html(" / " + bg.workTime + ":00");
         $('#timer-progress').show();
-
     } else {
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();
         $('#timer-progress').hide();
-
     }
 }
-
 
 // when getting work time input, check the value and set a limit
 function checkTimeInput () {
     var val = document.getElementById('work-time').value;
     document.getElementById('work-time').value = val >= MIN_WORK_PERIOD ? val : MIN_WORK_PERIOD;
 }
-
 
 // responses to toggle button
 function toggleCycle() {
@@ -61,7 +54,6 @@ function toggleCycle() {
         bg.loadTimer = true;
         bg.newTimer();
         showTimer();
-
     } else if (status == "Stop") { // force to stop
         // change appearance
         bg.toggleVal = "Start";
@@ -83,8 +75,7 @@ function changeTimer() {
     if (bg.loadTimer) {
         refresh();
         setTimeout(changeTimer, 100);
-    }
-    else {
+    } else {
         refresh();
     }
 }
@@ -92,7 +83,18 @@ function changeTimer() {
 
 function togglePlay(event) {
     var targetID = event.target.id;
-    chrome.runtime.sendMessage({audioID: targetID}, function(response) {
+    updateAudioStatus(targetID, true);
+}
+
+function refreshAudioStatus() {
+    var ambientSounds = document.getElementById('ambient-dropdown').children;
+    for (var i=0; i<ambientSounds.length; i++) {
+        updateAudioStatus(ambientSounds[i].id, false);
+    }
+}
+
+function updateAudioStatus(targetID, action) {
+    chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
         var ambientSound = document.getElementById(response.audioID);
         if (response.audioPaused) {
             ambientSound.classList.remove('is-active');
@@ -114,3 +116,4 @@ function attachListeners() {
 }
 
 window.addEventListener('load', attachListeners);
+refreshAudioStatus();
