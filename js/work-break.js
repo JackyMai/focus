@@ -1,4 +1,6 @@
 const MIN_WORK_PERIOD = 10;
+var WORK_CYCLE_START;  // Default value for the past work cycle
+var WORK_CYCLE_END;  // Default value for the past work cycle
 
 // connect to background
 var bg = chrome.extension.getBackgroundPage();
@@ -40,10 +42,15 @@ function checkTimeInput () {
 
 // responses to toggle button
 function toggleCycle() {
+
     var startBtn = document.getElementById('cycle-btn');
     var status = startBtn.innerHTML;
 
     if (status == "Start") {
+
+        WORK_CYCLE_START = (new Date).getTime();
+        bg.WORK_CYCLE_START = WORK_CYCLE_START;
+
         // change appearance
         bg.toggleVal = "Stop"; // toggle button appearance, can use any icon
         bg.main = "Working...";
@@ -55,6 +62,10 @@ function toggleCycle() {
         bg.newTimer();
         showTimer();
     } else if (status == "Stop") { // force to stop
+
+        WORK_CYCLE_END = (new Date).getTime();
+        bg.WORK_CYCLE_END = WORK_CYCLE_END;
+
         // change appearance
         bg.toggleVal = "Start";
         bg.main = "Work Stoped"; 

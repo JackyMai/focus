@@ -3,16 +3,18 @@ var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variabl
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
 
 // Update graph on set up
-updateHistory(startHistoryTime);
+updateHistory(startHistoryTime, (new Date).getTime());
 
 // Searches chrome history for the websites visited since the start time
-function updateHistory(startTime){
+function updateHistory(startTime, endTime){
+
     website_count_dictionary = {}; // dictionary of all the websites visited & their count
     var visits = chrome.history.search({
         'text': '',
-        'startTime': startTime
+        'startTime': startTime,
+        'endTime': endTime
     }, function(historyItems) { // returns various HistoryItems
-
+        console.log(historyItems);
         // loops through each history item, stores the URL and get's the visits to that URL
         for (var i = 0; i < historyItems.length; ++i) {
 
@@ -36,6 +38,7 @@ function updateHistory(startTime){
             loadPieChart();
         }
      });
+
  }
 
  var colours = [
@@ -145,15 +148,20 @@ $("#date-drop-down-select").change(function() {
 
     // Update the time range depending on which drop down was selected
     if (selected == "past-work-cycle"){
-       range = (new Date).getTime() - 1000 * 60 * 60 * (5/6);
+       var bg = chrome.extension.getBackgroundPage();
+       start = bg.WORK_CYCLE_START;
+       end = bg.WORK_CYCLE_END;
     } else if (selected == "past-day"){
-        range = (new Date).getTime() - 1000 * 60 * 60 * 24;
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24;
+        end = (new Date).getTime();
     }else if (selected == "past-week"){
-        range = (new Date).getTime() - 1000 * 60 * 60 * 24 * 7;;
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 7;;
+        end = (new Date).getTime();
     } else {
-        range = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
+        end = (new Date).getTime();
     }
     // Re-calculate the history values
-    updateHistory(range);
+    updateHistory(start, end);
 
 });

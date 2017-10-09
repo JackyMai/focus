@@ -7,6 +7,9 @@ var loadTimer = false;
 var timer = "";
 var goal = "";
 
+var WORK_CYCLE_START;
+var WORK_CYCLE_END;
+
 var past = 0;
 
 // set a new timer
