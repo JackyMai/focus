@@ -15,7 +15,7 @@ function newTimer() {
     //max = workTimer*60; // work time in sec
     //document.getElementById('timer-progress').max = max;
 
-    timer = "00:00"; // initialize the timer
+    timer = workTime + ":00"; // initialize the timer
     setTimer();
 }
 
@@ -27,11 +27,11 @@ function setTimer() {
         var min = arr[0];
         var sec = arr[1];
 
-        sec++;
+        sec--;
 
-        if (sec == 60) {
-            sec = "00";
-            min++;
+        if (sec < 0) {
+            sec = "59";
+            min--;
             if (min < 10) min = "0" + min;
         } else if (sec < 10) {
             sec = "0" + sec;
@@ -39,10 +39,11 @@ function setTimer() {
         timer = min + ":" + sec;
 
         // past time in percent
-        past = ((parseInt(min)*60 + parseInt(sec)) / (workTime*60))*100;
+
+        past = 100 - ((parseInt(min)*60 + parseInt(sec)) / (workTime*60))*100;
 
         // update status
-        if (!(workTime - min)) {
+        if (min == 00 && sec == 00) {
             loadTimer = false;
 
             // Send done notification
