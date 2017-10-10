@@ -1,9 +1,52 @@
 // Initialised variables
-var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
+//var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
 
+addWorkCycleToDropDown();
+
+function addWorkCycleToDropDown(){
+    var bg = chrome.extension.getBackgroundPage();
+    start = bg.WORK_CYCLE_START;
+    end = bg.WORK_CYCLE_END;
+    console.log(start);
+    console.log(end);
+    if (start && end){
+        bg.updateDropDown = false;
+        $('#date-drop-down-select').append($('<option>', {
+            value: 'past-work-cycle',
+            text: 'Past Work Cycle'
+        }));
+    }
+}
+
+updatePieChartData();
+
+function updatePieChartData(){
+
+    var selected = $("#date-drop-down-select").find(":selected").val();
+
+    // Update the time range depending on which drop down was selected
+    if (selected == "past-work-cycle"){
+       var bg = chrome.extension.getBackgroundPage();
+       start = bg.WORK_CYCLE_START;
+       end = bg.WORK_CYCLE_END;
+    } else if (selected == "past-day"){
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24;
+        end = (new Date).getTime();
+    }else if (selected == "past-week"){
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 7;;
+        end = (new Date).getTime();
+    } else {
+        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
+        end = (new Date).getTime();
+    }
+    // Re-calculate the history values
+    updateHistory(start, end);
+
+}
+
 // Update graph on set up
-updateHistory(startHistoryTime, (new Date).getTime());
+//updateHistory(startHistoryTime, (new Date).getTime());
 
 // Searches chrome history for the websites visited since the start time
 function updateHistory(startTime, endTime){
@@ -144,24 +187,6 @@ function sortList(){
 
 // Function to update the graph when the drop down changes the date range
 $("#date-drop-down-select").change(function() {
-    var selected = $("#date-drop-down-select").find(":selected").val();
-
-    // Update the time range depending on which drop down was selected
-    if (selected == "past-work-cycle"){
-       var bg = chrome.extension.getBackgroundPage();
-       start = bg.WORK_CYCLE_START;
-       end = bg.WORK_CYCLE_END;
-    } else if (selected == "past-day"){
-        start = (new Date).getTime() - 1000 * 60 * 60 * 24;
-        end = (new Date).getTime();
-    }else if (selected == "past-week"){
-        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 7;;
-        end = (new Date).getTime();
-    } else {
-        start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
-        end = (new Date).getTime();
-    }
-    // Re-calculate the history values
-    updateHistory(start, end);
-
+    updatePieChartData();
 });
+

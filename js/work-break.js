@@ -66,6 +66,11 @@ function toggleCycle() {
         WORK_CYCLE_END = (new Date).getTime();
         bg.WORK_CYCLE_END = WORK_CYCLE_END;
 
+        // If the drop down has not been updated to include work cycles then update the drop down.
+        if (bg.updateDropDown){
+            addWorkCycleToDropDown();
+        }
+
         // change appearance
         bg.toggleVal = "Start";
         bg.main = "Work Stoped"; 
