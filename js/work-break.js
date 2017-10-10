@@ -104,8 +104,16 @@ function togglePlay(event) {
     updateAudioStatus(targetID, true);
 }
 
+// Randomly toggles the play status of one of the ambient sounds
+function randomPlay(event) {
+    var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
+    var index = Math.random() * (ambientSounds.length - 1) + 1;
+    var targetID = ambientSounds[parseInt(index)].id;
+    updateAudioStatus(targetID, true);
+}
+
 function refreshAudioStatus() {
-    var ambientSounds = document.getElementById('ambient-dropdown').children;
+    var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i=0; i<ambientSounds.length; i++) {
         updateAudioStatus(ambientSounds[i].id, false);
     }
@@ -115,8 +123,14 @@ function updateAudioStatus(targetID, action) {
     chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
         var ambientSound = document.getElementById(response.audioID);
         if (response.audioPaused) {
+            var icon = ambientSound.getElementsByClassName('fa')[0];
+            icon.style.visibility = 'hidden';
+
             ambientSound.classList.remove('is-active');
-        } else {
+        } else {            
+            var icon = ambientSound.getElementsByClassName('fa')[0];
+            icon.style.visibility = 'visible';
+
             ambientSound.classList.add('is-active');
         }
     });
@@ -126,11 +140,13 @@ function attachListeners() {
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
 
-    var dropdownItems = document.getElementById('ambient-dropdown').children;
-    for (var i = 0; i < dropdownItems.length; i++) {
+    var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
+    for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
         var ambientID = dropdownItems[i].id;
         document.getElementById(ambientID).addEventListener('click', togglePlay);
     }
+
+    document.getElementById('ambient-random').addEventListener('click', randomPlay);
 }
 
 window.addEventListener('load', attachListeners);

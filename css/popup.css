@@ -123,3 +123,8 @@ html, body {
     text-align: right;
     font-style: italic;
 }
+
+#ambient-dropdown i {
+    margin-left: 8px;
+    visibility: hidden;
+}
