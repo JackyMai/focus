@@ -80,6 +80,8 @@ function toggleCycle() {
         // change variables and take action
         bg.loadTimer = false;
         bg.stopTimer();
+
+        updatePieChartData(); 
     }
 
     refresh();

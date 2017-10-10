@@ -137,6 +137,7 @@ function loadPieChart(){
     // check to ensure there is website data to display to the user
     // if not - display no data message to user
 	if (sortedList.length <= 0){
+	    $('#no-data-div').remove();
 	    $('#top-websites-canvas').remove();
         $('#top-visited-websites-graph').append('<div id="no-data-div">  No data to display </div>');
         document.getElementById('js-legend').innerHTML = '';
