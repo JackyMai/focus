@@ -14,10 +14,25 @@ function addWorkCycleToDropDown(){
     end = bg.WORK_CYCLE_END;
     if (start && end){
         bg.updateDropDown = false;
+        // update the drop down select to include the past work cycle
+        $('#date-drop-down-select').empty();
         $('#date-drop-down-select').append($('<option>', {
             value: 'past-work-cycle',
             text: 'Past Work Cycle'
         }));
+        $('#date-drop-down-select').append($('<option>', {
+            value: 'past-day',
+            text: 'Past Day'
+        }));
+        $('#date-drop-down-select').append($('<option>', {
+            value: 'past-week',
+            text: 'Past Week'
+        }));
+        $('#date-drop-down-select').append($('<option>', {
+            value: 'past-month',
+            text: 'Past Month<'
+        }));
+        $("#date-drop-down-select").val('past-day');
     }
 }
 
