@@ -111,3 +111,8 @@ html, body {
 #timer-progress {
     margin-bottom: 1px;
 }
+
+#ambient-dropdown i {
+    margin-left: 8px;
+    visibility: hidden;
+}

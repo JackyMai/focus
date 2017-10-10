@@ -97,8 +97,14 @@ function updateAudioStatus(targetID, action) {
     chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
         var ambientSound = document.getElementById(response.audioID);
         if (response.audioPaused) {
+            var icon = ambientSound.getElementsByClassName('fa')[0];
+            icon.style.visibility = 'hidden';
+
             ambientSound.classList.remove('is-active');
-        } else {
+        } else {            
+            var icon = ambientSound.getElementsByClassName('fa')[0];
+            icon.style.visibility = 'visible';
+            
             ambientSound.classList.add('is-active');
         }
     });
