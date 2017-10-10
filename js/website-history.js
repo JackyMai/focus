@@ -81,7 +81,6 @@ function updateHistory(startTime, endTime){
             loadPieChart();
         }
      });
-
  }
 
  var colours = [
@@ -119,47 +118,56 @@ var processVisits = function(url, visitItems, startTime){
 function loadPieChart(){
 
 	var sortedList = sortList();
-	console.log(sortedList);
 
-	// get the keys and values to use within the chart, by looping through the sorted list
-	var keys = [];
-	var values = [];
-	for (var i = 0; i < sortedList.length; i++) {
-    var rank = i + 1;
-		keys.push("  " + rank + ": " + sortedList[i][0]);
-		values.push(sortedList[i][1]);
-	}
+	if (sortedList.length <= 0){
+	    $('#top-websites-canvas').remove();
+        $('#top-visited-websites-graph').append('<div id="no-data-div">  No data to display </div>');
+        document.getElementById('js-legend').innerHTML = '';
 
-	  $('#top-websites-canvas').remove();
-    $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
+	} else {
 
-	// get the chart element and set the values for it
-    var canvas = document.getElementById("top-websites-canvas");
-    var ctx = canvas.getContext('2d');
-
-    var chart = new Chart(ctx, {
-        type: 'pie', // create a pie chart
-        data: { // The data and colour is initialised for the chart
-            labels: keys,
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: colours,
-                borderColor: colours,
-                data: values
-            }]
-        },
-        options: {
-          tooltips: {
-            bodyFontSize: 20, //TODO: not working because of generateLegend(), but usually sets the font size of the hover text
-          },
-          legend: {
-            display: false
-          }
+        // get the keys and values to use within the chart, by looping through the sorted list
+        var keys = [];
+        var values = [];
+        for (var i = 0; i < sortedList.length; i++) {
+        var rank = i + 1;
+            keys.push("  " + rank + ": " + sortedList[i][0]);
+            values.push(sortedList[i][1]);
         }
-    });
 
-    // generates legend to set to div element
-    document.getElementById('js-legend').innerHTML = chart.generateLegend();
+        $('#no-data-div').remove();
+        $('#top-websites-canvas').remove();
+        $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
+
+        // get the chart element and set the values for it
+        var canvas = document.getElementById("top-websites-canvas");
+        var ctx = canvas.getContext('2d');
+
+        var chart = new Chart(ctx, {
+            type: 'pie', // create a pie chart
+            data: { // The data and colour is initialised for the chart
+                labels: keys,
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: colours,
+                    borderColor: colours,
+                    data: values
+                }]
+            },
+            options: {
+              tooltips: {
+                bodyFontSize: 20, //TODO: not working because of generateLegend(), but usually sets the font size of the hover text
+              },
+              legend: {
+                display: false
+              }
+            }
+        });
+
+        // generates legend to set to div element
+        document.getElementById('js-legend').innerHTML = chart.generateLegend();
+
+    }
 
 }
 
