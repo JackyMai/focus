@@ -30,9 +30,11 @@ function addWorkCycleToDropDown(){
         }));
         $('#date-drop-down-select').append($('<option>', {
             value: 'past-month',
-            text: 'Past Month<'
+            text: 'Past Month'
         }));
-        $("#date-drop-down-select").val('past-day');
+        // update the value to be the drop down for the
+        // $("#date-drop-down-select").val('past-day');
+        updatePieChartData();
     }
 }
 
