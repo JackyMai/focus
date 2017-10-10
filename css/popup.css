@@ -113,12 +113,12 @@ html, body {
 }
 
 #no-data-div{
-    padding-top: 10%;
+    padding-top: 15%;
     width: 300px !important;
     height: 300px !important;
     margin-left: 5%;
     margin-right: 5%;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: normal;
     text-align: right;
     font-style: italic;

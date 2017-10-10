@@ -1,15 +1,17 @@
 // Initialised variables
-//var startHistoryTime = (new Date).getTime() - 1000 * 60 * 60 * (5/6); // variable representing the start time that websites are recorded from
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
 
+// Update the drop down values on first page load
 addWorkCycleToDropDown();
 
+// Draw the pie chart on page load
+updatePieChartData();
+
+// Function to add the current work cycle value to the drop down options
 function addWorkCycleToDropDown(){
     var bg = chrome.extension.getBackgroundPage();
     start = bg.WORK_CYCLE_START;
     end = bg.WORK_CYCLE_END;
-    console.log(start);
-    console.log(end);
     if (start && end){
         bg.updateDropDown = false;
         $('#date-drop-down-select').append($('<option>', {
@@ -19,8 +21,7 @@ function addWorkCycleToDropDown(){
     }
 }
 
-updatePieChartData();
-
+// function to determine the data from the drop down select and pass into the website history calculation
 function updatePieChartData(){
 
     var selected = $("#date-drop-down-select").find(":selected").val();
@@ -44,9 +45,6 @@ function updatePieChartData(){
     updateHistory(start, end);
 
 }
-
-// Update graph on set up
-//updateHistory(startHistoryTime, (new Date).getTime());
 
 // Searches chrome history for the websites visited since the start time
 function updateHistory(startTime, endTime){
@@ -119,13 +117,15 @@ function loadPieChart(){
 
 	var sortedList = sortList();
 
+    // check to ensure there is website data to display to the user
+    // if not - display no data message to user
 	if (sortedList.length <= 0){
 	    $('#top-websites-canvas').remove();
         $('#top-visited-websites-graph').append('<div id="no-data-div">  No data to display </div>');
         document.getElementById('js-legend').innerHTML = '';
-
-	} else {
-
+	}
+	// if there is data, then create the pie chart
+	else {
         // get the keys and values to use within the chart, by looping through the sorted list
         var keys = [];
         var values = [];

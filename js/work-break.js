@@ -48,6 +48,7 @@ function toggleCycle() {
 
     if (status == "Start") {
 
+        // when the start button is pressed, update the current work cycle to have an start time of now
         WORK_CYCLE_START = (new Date).getTime();
         bg.WORK_CYCLE_START = WORK_CYCLE_START;
 
@@ -63,6 +64,7 @@ function toggleCycle() {
         showTimer();
     } else if (status == "Stop") { // force to stop
 
+        // when the stop button is pressed, update the current work cycle to have an end time of now
         WORK_CYCLE_END = (new Date).getTime();
         bg.WORK_CYCLE_END = WORK_CYCLE_END;
 
