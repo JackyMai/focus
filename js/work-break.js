@@ -28,7 +28,6 @@ function refresh() {
         $('#timer-progress').show();
     } else {
         // when the cycle is stopped, update the current work cycle to have an end time of now
-        console.log(bg.WORK_CYCLE_START);
         if (bg.WORK_CYCLE_START){
             WORK_CYCLE_END = (new Date).getTime();
             bg.WORK_CYCLE_END = WORK_CYCLE_END;
@@ -64,7 +63,7 @@ function toggleCycle() {
         bg.toggleVal = "Stop"; // toggle button appearance, can use any icon
         bg.main = "Working...";
         chrome.browserAction.setBadgeText({text: 'ON'}); //change the badge
-        
+
         // change variables and take action
         bg.workTime = document.getElementById('work-time').value; //get work time input and send it to background
         bg.loadTimer = true;
@@ -82,13 +81,13 @@ function toggleCycle() {
 
         // change appearance
         bg.toggleVal = "Start";
-        bg.main = "Work Stoped"; 
+        bg.main = "Work Stoped";
 
         // change variables and take action
         bg.loadTimer = false;
         bg.stopTimer();
 
-        updatePieChartData(); 
+        updatePieChartData();
     }
 
     refresh();
@@ -136,7 +135,7 @@ function updateAudioStatus(targetID, action) {
             icon.style.visibility = 'hidden';
 
             ambientSound.classList.remove('is-active');
-        } else {            
+        } else {
             var icon = ambientSound.getElementsByClassName('fa')[0];
             icon.style.visibility = 'visible';
 

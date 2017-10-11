@@ -72,7 +72,6 @@ function updateHistory(startTime, endTime){
         'startTime': startTime,
         'endTime': endTime
     }, function(historyItems) { // returns various HistoryItems
-        console.log(historyItems);
         // loops through each history item, stores the URL and get's the visits to that URL
         for (var i = 0; i < historyItems.length; ++i) {
 
@@ -215,4 +214,3 @@ function sortList(){
 $("#date-drop-down-select").change(function() {
     updatePieChartData();
 });
-
