@@ -1,12 +1,6 @@
 // Initialised variables
 var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
 
-// Update the drop down values on first page load
-addWorkCycleToDropDown();
-
-// Draw the pie chart on page load
-updatePieChartData();
-
 // Function to add the current work cycle value to the drop down options
 function addWorkCycleToDropDown(){
     var bg = chrome.extension.getBackgroundPage();
@@ -14,6 +8,9 @@ function addWorkCycleToDropDown(){
     end = bg.WORK_CYCLE_END;
     if (start && end){
         bg.updateDropDown = false;
+
+        console.log("here");
+
         // update the drop down select to include the past work cycle
         $('#date-drop-down-select').empty();
         $('#date-drop-down-select').append($('<option>', {
@@ -32,10 +29,9 @@ function addWorkCycleToDropDown(){
             value: 'past-month',
             text: 'Past Month'
         }));
-        // update the value to be the drop down for the
-        // $("#date-drop-down-select").val('past-day');
-        updatePieChartData();
     }
+    // Draw the pie chart
+    updatePieChartData();
 }
 
 // function to determine the data from the drop down select and pass into the website history calculation
@@ -83,7 +79,7 @@ function updateHistory(startTime, endTime){
             // creates the callback function for chrome's getVisits() that's performed on each URL
             var processVisitsWithUrl = function(url) {
                 return function(visitItems) {
-                    processVisits(url, visitItems, startTime);
+                    processVisits(url, visitItems, startTime, endTime);
                 };
             };
             chrome.history.getVisits({url: url}, processVisitsWithUrl(url));
@@ -111,12 +107,13 @@ function updateHistory(startTime, endTime){
  ]
 
 // This function is used by Chrome's getVisits, and increments the number of visits if the time is past the startTime
-var processVisits = function(url, visitItems, startTime){
+var processVisits = function(url, visitItems, startTime, endTime){
 	// loops through all the visit items
+
 	for (var i=0; i<visitItems.length; i++){
 		// gets the time the URL was visited, and increments the count if it was visited after the startTime
 		var visitTime = visitItems[i].visitTime;
-		if (visitTime > startTime){
+		if (visitTime > startTime && visitTime < endTime){
             var url_array = url.split("/"); // get the domain name
             website_count_dictionary[url_array[2]]++;
         }
@@ -128,10 +125,34 @@ var processVisits = function(url, visitItems, startTime){
     }
 }
 
+// This function loops through the dictionary and sorts the list in descending order of the top 10 domains
+function sortList(){
+
+	// initialise the dictionary as an array, so it can be sorted
+	sortedWebsites = [];
+	for (var key in website_count_dictionary) {
+		 sortedWebsites.push([ key, website_count_dictionary[key] ])
+	}
+
+	// sort the array, comparing the values and arranging them biggest -> smallest
+	sortedWebsites.sort(function(firstValue, secondValue) {
+		return secondValue[1] - firstValue[1];
+	});
+
+	// splice the list to only be top 10, in case more are shown
+	if (sortedWebsites.length > 10){
+		sortedWebsites = sortedWebsites.splice(0,10);
+	}
+
+	return sortedWebsites;
+}
+
 // This function loads the data onto the piechart
 function loadPieChart(){
 
-	var sortedList = sortList();
+
+	sortedList = sortList();
+
 
     // check to ensure there is website data to display to the user
     // if not - display no data message to user
@@ -143,6 +164,7 @@ function loadPieChart(){
 	}
 	// if there is data, then create the pie chart
 	else {
+
         // get the keys and values to use within the chart, by looping through the sorted list
         var keys = [];
         var values = [];
@@ -152,6 +174,7 @@ function loadPieChart(){
             values.push(sortedList[i][1]);
         }
 
+        document.getElementById('js-legend').innerHTML = '';
         $('#no-data-div').remove();
         $('#top-websites-canvas').remove();
         $('#top-visited-websites-graph').append('<canvas id="top-websites-canvas"></canvas>');
@@ -188,27 +211,7 @@ function loadPieChart(){
 
 }
 
-// This function loops through the dictionary and sorts the list in descending order of the top 10 domains
-function sortList(){
 
-	// initialise the dictionary as an array, so it can be sorted
-	var sortedList = [];
-	for (var key in website_count_dictionary) {
-		 sortedList.push([ key, website_count_dictionary[key] ])
-	}
-
-	// sort the array, comparing the values and arranging them biggest -> smallest
-	sortedList.sort(function(firstValue, secondValue) {
-		return secondValue[1] - firstValue[1];
-	});
-
-	// splice the list to only be top 10, incase more are shown
-	if (sortedList.length > 10){
-		sortedList = sortedList.splice(0,10);
-	}
-
-	return sortedList;
-}
 
 // Function to update the graph when the drop down changes the date range
 $("#date-drop-down-select").change(function() {

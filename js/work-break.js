@@ -31,14 +31,12 @@ function refresh() {
         if (bg.WORK_CYCLE_START){
             WORK_CYCLE_END = (new Date).getTime();
             bg.WORK_CYCLE_END = WORK_CYCLE_END;
-            if (bg.updateDropDown){
-                addWorkCycleToDropDown();
-            }
         }
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();
         $('#timer-progress').hide();
+        addWorkCycleToDropDown();
     }
 }
 
