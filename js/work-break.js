@@ -1,4 +1,6 @@
-const MIN_WORK_PERIOD = 10;
+const MIN_WORK_PERIOD = 1;
+var WORK_CYCLE_START;  // Default value for the past work cycle
+var WORK_CYCLE_END;  // Default value for the past work cycle
 
 // connect to background
 var bg = chrome.extension.getBackgroundPage();
@@ -6,8 +8,10 @@ var bg = chrome.extension.getBackgroundPage();
 // check global variables and refresh the window when opening
 $(function(){
     refresh();
+    addWorkCycleToDropDown();
     if (bg.loadTimer) showTimer(); // if the timer is on, show it
-})
+});
+
 
 function refresh() {
     // refresh the main view
@@ -25,10 +29,16 @@ function refresh() {
         $('#goal').html(" / " + bg.workTime + ":00");
         $('#timer-progress').show();
     } else {
+        // when the cycle is stopped, update the current work cycle to have an end time of now
+        if (bg.WORK_CYCLE_START){
+            WORK_CYCLE_END = (new Date).getTime();
+            bg.WORK_CYCLE_END = WORK_CYCLE_END;
+        }
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();
         $('#timer-progress').hide();
+        addWorkCycleToDropDown();
     }
 }
 
@@ -44,24 +54,40 @@ function toggleCycle() {
     var status = startBtn.innerHTML;
 
     if (status == "Start") {
+
+        // when the start button is pressed, update the current work cycle to have an start time of now
+        WORK_CYCLE_START = (new Date).getTime();
+        bg.WORK_CYCLE_START = WORK_CYCLE_START;
+
         // change appearance
         bg.toggleVal = "Stop"; // toggle button appearance, can use any icon
         bg.main = "Working...";
         chrome.browserAction.setBadgeText({text: 'ON'}); //change the badge
-        
+
         // change variables and take action
         bg.workTime = document.getElementById('work-time').value; //get work time input and send it to background
         bg.loadTimer = true;
         bg.newTimer();
         showTimer();
     } else if (status == "Stop") { // force to stop
+        // when the stop button is pressed, update the current work cycle to have an end time of now
+        WORK_CYCLE_END = (new Date).getTime();
+        bg.WORK_CYCLE_END = WORK_CYCLE_END;
+
+        // If the drop down has not been updated to include work cycles then update the drop down.
+        if (bg.updateDropDown){
+            addWorkCycleToDropDown();
+        }
+
         // change appearance
         bg.toggleVal = "Start";
-        bg.main = "Work Stoped"; 
+        bg.main = "Work Stoped";
 
         // change variables and take action
         bg.loadTimer = false;
         bg.stopTimer();
+
+        updatePieChartData();
     }
 
     refresh();
@@ -109,7 +135,7 @@ function updateAudioStatus(targetID, action) {
             icon.style.visibility = 'hidden';
 
             ambientSound.classList.remove('is-active');
-        } else {            
+        } else {
             var icon = ambientSound.getElementsByClassName('fa')[0];
             icon.style.visibility = 'visible';
 
