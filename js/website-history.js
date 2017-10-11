@@ -9,8 +9,6 @@ function addWorkCycleToDropDown(){
     if (start && end){
         bg.updateDropDown = false;
 
-        console.log("here");
-
         // update the drop down select to include the past work cycle
         $('#date-drop-down-select').empty();
         $('#date-drop-down-select').append($('<option>', {
