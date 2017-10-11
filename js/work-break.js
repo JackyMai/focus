@@ -1,4 +1,4 @@
-const MIN_WORK_PERIOD = 10;
+const MIN_WORK_PERIOD = 1;
 var WORK_CYCLE_START;  // Default value for the past work cycle
 var WORK_CYCLE_END;  // Default value for the past work cycle
 
@@ -27,6 +27,15 @@ function refresh() {
         $('#goal').html(" / " + bg.workTime + ":00");
         $('#timer-progress').show();
     } else {
+        // when the cycle is stopped, update the current work cycle to have an end time of now
+        console.log(bg.WORK_CYCLE_START);
+        if (bg.WORK_CYCLE_START){
+            WORK_CYCLE_END = (new Date).getTime();
+            bg.WORK_CYCLE_END = WORK_CYCLE_END;
+            if (bg.updateDropDown){
+                addWorkCycleToDropDown();
+            }
+        }
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();
@@ -42,7 +51,6 @@ function checkTimeInput () {
 
 // responses to toggle button
 function toggleCycle() {
-
     var startBtn = document.getElementById('cycle-btn');
     var status = startBtn.innerHTML;
 
@@ -63,7 +71,6 @@ function toggleCycle() {
         bg.newTimer();
         showTimer();
     } else if (status == "Stop") { // force to stop
-
         // when the stop button is pressed, update the current work cycle to have an end time of now
         WORK_CYCLE_END = (new Date).getTime();
         bg.WORK_CYCLE_END = WORK_CYCLE_END;
