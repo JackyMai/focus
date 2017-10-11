@@ -8,8 +8,10 @@ var bg = chrome.extension.getBackgroundPage();
 // check global variables and refresh the window when opening
 $(function(){
     refresh();
+    addWorkCycleToDropDown();
     if (bg.loadTimer) showTimer(); // if the timer is on, show it
-})
+});
+
 
 function refresh() {
     // refresh the main view
