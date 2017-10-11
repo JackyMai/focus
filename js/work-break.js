@@ -124,8 +124,7 @@ function attachListeners() {
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
-        var ambientID = dropdownItems[i].id;
-        document.getElementById(ambientID).addEventListener('click', togglePlay);
+        dropdownItems[i].addEventListener('click', togglePlay);
     }
 
     document.getElementById('ambient-random').addEventListener('click', randomPlay);
