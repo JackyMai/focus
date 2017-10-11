@@ -46,8 +46,6 @@ html, body {
     height: 100px;
 }
 
-
-
 #extension-bottom {
     position: fixed;
     bottom: 0;
@@ -127,4 +125,8 @@ html, body {
 #ambient-dropdown i {
     margin-left: 8px;
     visibility: hidden;
+}
+
+.select:not(.is-multiple)::after {
+    z-index: auto;
 }
