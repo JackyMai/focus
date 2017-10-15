@@ -2,23 +2,34 @@ var MUTE;
 var VOLUME;
 
 /* Ambient Sound Dropdown Item */
-function togglePlay(event) {
+function onItemClick(event) {
     var targetID = event.target.closest('a').id;
-    updateAudioStatus(targetID, true);
+    toggleAudioStatus(targetID, true);
 }
 
-function updateAudioStatus(targetID, action) {
+function toggleAudioStatus(targetID, action) {
     chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
-        var ambientSound = document.getElementById(response.audioID);
-        if (response.audioPaused) {
-            var icon = ambientSound.getElementsByClassName('fa')[0];
-            icon.style.visibility = 'hidden';
-            ambientSound.classList.remove('is-active');
-        } else {
-            var icon = ambientSound.getElementsByClassName('fa')[0];
-            icon.style.visibility = 'visible';
-            ambientSound.classList.add('is-active');
-        }
+        updateDropdownItem(response.audioID, response.audioPaused);
+    });
+}
+
+function updateDropdownItem(targetID, paused) {
+    var ambientSound = document.getElementById(targetID);
+
+    if (paused) {
+        var icon = ambientSound.getElementsByClassName('fa')[0];
+        icon.style.visibility = 'hidden';
+        ambientSound.classList.remove('is-active');
+    } else {
+        var icon = ambientSound.getElementsByClassName('fa')[0];
+        icon.style.visibility = 'visible';
+        ambientSound.classList.add('is-active');
+    }
+}
+
+function setAudioStatus(targetID, pause) {
+    chrome.runtime.sendMessage({audioID: targetID, audioPause: pause}, function(response) {
+        updateDropdownItem(response.audioID, response.audioPaused);
     });
 }
 
@@ -27,7 +38,13 @@ function onRandomBtnClick(event) {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     var index = Math.random() * (ambientSounds.length - 1) + 1;
     var targetID = ambientSounds[parseInt(index)].id;
-    updateAudioStatus(targetID, true);
+
+    for(var i=0; i<ambientSounds.length; i++) {
+        var id = ambientSounds[i].id;
+        setAudioStatus(id, true);
+    }
+
+    setAudioStatus(targetID, false);
 }
 
 /* Mute Button */
@@ -79,7 +96,7 @@ function onSliderDrag() {
 function refreshAudioStatus() {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i=0; i<ambientSounds.length; i++) {
-        updateAudioStatus(ambientSounds[i].id, false);
+        toggleAudioStatus(ambientSounds[i].id, false);
     }
 }
 
@@ -110,7 +127,7 @@ function attachListeners() {
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
-        dropdownItems[i].addEventListener('click', togglePlay);
+        dropdownItems[i].addEventListener('click', onItemClick);
     }
 
     document.getElementById('ambient-random').addEventListener('click', onRandomBtnClick);
