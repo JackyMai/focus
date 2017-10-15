@@ -49,7 +49,7 @@
                 <input type="number" id="work-time" /> mins
             </a>
             <div id="btns">
-                <div class="dropdown is-hoverable" id="ambient-menu">
+                <div class="dropdown is-active" id="ambient-menu">
                     <div class="dropdown-trigger">
                         <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu4">
                             <span>Ambient Sound</span>
@@ -60,29 +60,34 @@
                     </div>
                     <div class="dropdown-menu" role="menu">
                         <div id="ambient-dropdown" class="dropdown-content">
+                            <div id="ambient-controls" class="dropdown-item">
+                                <a id="ambient-mute" class="fa fa-volume-up fa-2x"></a>
+                                <input type="range" min="0" max="100" value="70" step="1">
+                            </div>
+                            <hr class="dropdown-divider">
                             <a id="ambient-storm" class="dropdown-item ambient-sound">
                                 Storm
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-waves" class="dropdown-item ambient-sound">
                                 Waves
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-stream" class="dropdown-item ambient-sound">
                                 Waterfall
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-street" class="dropdown-item ambient-sound">
                                 Busy Road
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-birds" class="dropdown-item ambient-sound">
                                 Birds
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-cricket" class="dropdown-item ambient-sound">
                                 Crickets
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <hr class="dropdown-divider">
                             <a id="ambient-random" class="dropdown-item">
