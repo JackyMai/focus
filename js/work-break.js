@@ -133,20 +133,26 @@ function updateAudioStatus(targetID, action) {
         if (response.audioPaused) {
             var icon = ambientSound.getElementsByClassName('fa')[0];
             icon.style.visibility = 'hidden';
-
             ambientSound.classList.remove('is-active');
         } else {
             var icon = ambientSound.getElementsByClassName('fa')[0];
             icon.style.visibility = 'visible';
-
             ambientSound.classList.add('is-active');
         }
+    });
+}
+
+function updateVolume(event) {
+    $("#ambient-slider").on('input', function() {
+        chrome.runtime.sendMessage({audioVolume: this.value});
     });
 }
 
 function attachListeners() {
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
+
+    document.getElementById('ambient-slider').addEventListener('input', updateVolume());
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
