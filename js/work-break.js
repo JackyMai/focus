@@ -127,13 +127,26 @@ function refreshAudioStatus() {
     }
 }
 
-function refreshVolumeSlider() {
-    chrome.storage.local.get('volume', function(items) {
+var MUTE;
+var VOLUME;
+
+function refreshVolumeControls() {
+    chrome.storage.local.get(['volume', 'mute'], function(items) {
+        // Retrieve volume preference from local storage
         if (items.volume) {
-            document.getElementById('ambient-slider').value = items.volume;
+            VOLUME = items.volume;
+            $("#ambient-slider").val(VOLUME);
             updateVolume();
         }
-    })
+
+        // Retrieve mute setting from local storage
+        if (items.mute) {
+            MUTE = true;
+        } else {
+            MUTE = false;
+        }
+        setMute(MUTE);
+    });
 }
 
 function updateAudioStatus(targetID, action) {
@@ -151,17 +164,45 @@ function updateAudioStatus(targetID, action) {
     });
 }
 
-function updateVolume(event) {
-    var volume = $("#ambient-slider").val();
-    chrome.runtime.sendMessage({audioVolume: volume});
-    chrome.storage.local.set({'volume': volume});   // Save volume setting locally
+function toggleMute() {
+    setMute(!MUTE);
+}
+
+function setMute(mute) {
+    var ambientMute = document.getElementById('ambient-mute');
+
+    if (mute) {
+        ambientMute.classList.remove('fa-volume-up');
+        ambientMute.classList.add('fa-volume-off');
+
+        MUTE = true;
+        chrome.storage.local.set({'mute': true});
+
+        $("#ambient-slider").val(0);
+        chrome.runtime.sendMessage({audioVolume: 0});
+    } else {
+        ambientMute.classList.remove('fa-volume-off')
+        ambientMute.classList.add('fa-volume-up');
+
+        MUTE = false;
+        chrome.storage.local.set({'mute': false});
+
+        $("#ambient-slider").val(VOLUME);
+        chrome.runtime.sendMessage({audioVolume: VOLUME});
+    }
+}
+
+function updateVolume() {
+    VOLUME = $("#ambient-slider").val();
+    chrome.runtime.sendMessage({audioVolume: VOLUME});
+    chrome.storage.local.set({'volume': VOLUME});   // Save volume setting locally
 }
 
 function attachListeners() {
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
 
-    // document.getElementById('ambient-mute').addEventListener(click)
+    document.getElementById('ambient-mute').addEventListener('click', toggleMute);
     document.getElementById('ambient-slider').addEventListener('input', updateVolume);
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
@@ -174,4 +215,4 @@ function attachListeners() {
 
 window.addEventListener('load', attachListeners);
 refreshAudioStatus();
-refreshVolumeSlider();
+refreshVolumeControls();
