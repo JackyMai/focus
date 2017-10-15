@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener(
                 togglePlay(ambientSound);
             }
             sendResponse({audioID: request.audioID, audioPaused: ambientSound.paused});
-        } else if (request.audioVolume) {
+        } else if (request.audioVolume || request.audioVolume === 0) {
             setVolume(request.audioVolume);
         }
     }
