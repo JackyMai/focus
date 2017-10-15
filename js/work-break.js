@@ -164,8 +164,16 @@ function updateAudioStatus(targetID, action) {
     });
 }
 
-function toggleMute() {
+function onMuteBtnClick() {
     setMute(!MUTE);
+
+    if (MUTE) {
+        $("#ambient-slider").val(0);
+        chrome.runtime.sendMessage({audioVolume: 0});
+    } else {
+        $("#ambient-slider").val(VOLUME);
+        chrome.runtime.sendMessage({audioVolume: VOLUME});
+    }
 }
 
 function setMute(mute) {
@@ -177,22 +185,20 @@ function setMute(mute) {
 
         MUTE = true;
         chrome.storage.local.set({'mute': true});
-
-        $("#ambient-slider").val(0);
-        chrome.runtime.sendMessage({audioVolume: 0});
     } else {
         ambientMute.classList.remove('fa-volume-off')
         ambientMute.classList.add('fa-volume-up');
 
         MUTE = false;
         chrome.storage.local.set({'mute': false});
-
-        $("#ambient-slider").val(VOLUME);
-        chrome.runtime.sendMessage({audioVolume: VOLUME});
     }
 }
 
 function updateVolume() {
+    if (MUTE) {
+        setMute(false);
+    }
+    
     VOLUME = $("#ambient-slider").val();
     chrome.runtime.sendMessage({audioVolume: VOLUME});
     chrome.storage.local.set({'volume': VOLUME});   // Save volume setting locally
@@ -202,7 +208,7 @@ function attachListeners() {
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
 
-    document.getElementById('ambient-mute').addEventListener('click', toggleMute);
+    document.getElementById('ambient-mute').addEventListener('click', onMuteBtnClick);
     document.getElementById('ambient-slider').addEventListener('input', updateVolume);
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
