@@ -20,6 +20,7 @@ function refreshAudioStatus() {
         updateAudioStatus(ambientSounds[i].id, false);
     }
 }
+
 function refreshVolumeControls() {
     chrome.storage.local.get(['volume', 'mute'], function(items) {
         // Retrieve volume preference from local storage
@@ -36,6 +37,7 @@ function refreshVolumeControls() {
             MUTE = false;
         }
         setMute(MUTE);
+        applyMute();
     });
 }
 
@@ -54,9 +56,7 @@ function updateAudioStatus(targetID, action) {
     });
 }
 
-function onMuteBtnClick() {
-    setMute(!MUTE);
-
+function applyMute() {
     if (MUTE) {
         $("#ambient-slider").val(0);
         chrome.runtime.sendMessage({audioVolume: 0});
@@ -64,6 +64,11 @@ function onMuteBtnClick() {
         $("#ambient-slider").val(VOLUME);
         chrome.runtime.sendMessage({audioVolume: VOLUME});
     }
+}
+
+function onMuteBtnClick() {
+    setMute(!MUTE);
+    applyMute();
 }
 
 function setMute(mute) {
