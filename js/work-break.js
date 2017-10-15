@@ -127,6 +127,15 @@ function refreshAudioStatus() {
     }
 }
 
+function refreshVolumeSlider() {
+    chrome.storage.local.get('volume', function(items) {
+        if (items.volume) {
+            document.getElementById('ambient-slider').value = items.volume;
+            updateVolume();
+        }
+    })
+}
+
 function updateAudioStatus(targetID, action) {
     chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
         var ambientSound = document.getElementById(response.audioID);
@@ -143,16 +152,17 @@ function updateAudioStatus(targetID, action) {
 }
 
 function updateVolume(event) {
-    $("#ambient-slider").on('input', function() {
-        chrome.runtime.sendMessage({audioVolume: this.value});
-    });
+    var volume = $("#ambient-slider").val();
+    chrome.runtime.sendMessage({audioVolume: volume});
+    chrome.storage.local.set({'volume': volume});   // Save volume setting locally
 }
 
 function attachListeners() {
     document.getElementById('work-time').addEventListener('input', checkTimeInput);
     document.getElementById('cycle-btn').addEventListener('click', toggleCycle);
 
-    document.getElementById('ambient-slider').addEventListener('input', updateVolume());
+    // document.getElementById('ambient-mute').addEventListener(click)
+    document.getElementById('ambient-slider').addEventListener('input', updateVolume);
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
@@ -164,3 +174,4 @@ function attachListeners() {
 
 window.addEventListener('load', attachListeners);
 refreshAudioStatus();
+refreshVolumeSlider();

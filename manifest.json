@@ -17,7 +17,8 @@
     },
     "permissions": [
         "history",
-        "notifications"
+        "notifications",
+        "storage"
     ],
     "content_scripts": [
         {
