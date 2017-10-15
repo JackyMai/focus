@@ -2,7 +2,7 @@ var MUTE;
 var VOLUME;
 
 function togglePlay(event) {
-    var targetID = event.target.id;
+    var targetID = event.target.closest('a').id;
     updateAudioStatus(targetID, true);
 }
 
@@ -26,7 +26,7 @@ function refreshVolumeControls() {
         if (items.volume) {
             VOLUME = items.volume;
             $("#ambient-slider").val(VOLUME);
-            updateVolume();
+            onSliderDrag();
         }
 
         // Retrieve mute setting from local storage
@@ -84,7 +84,7 @@ function setMute(mute) {
     }
 }
 
-function updateVolume() {
+function onSliderDrag() {
     if (MUTE) {
         setMute(false);
     }
@@ -96,7 +96,7 @@ function updateVolume() {
 
 function attachListeners() {
     document.getElementById('ambient-mute').addEventListener('click', onMuteBtnClick);
-    document.getElementById('ambient-slider').addEventListener('input', updateVolume);
+    document.getElementById('ambient-slider').addEventListener('input', onSliderDrag);
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
