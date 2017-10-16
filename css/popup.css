@@ -122,7 +122,7 @@ html, body {
     font-style: italic;
 }
 
-#ambient-dropdown i {
+#ambient-dropdown i.fa {
     margin-left: 8px;
     visibility: hidden;
 }
@@ -137,5 +137,9 @@ html, body {
 }
 
 #ambient-mute {
+    margin-right: 8px;
+}
+
+.prefix {
     margin-right: 8px;
 }

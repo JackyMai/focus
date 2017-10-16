@@ -6,6 +6,7 @@
     <title>Focus</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+    <link rel="stylesheet" href="lib/icofont.css">
     <link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
@@ -49,7 +50,7 @@
                 <input type="number" id="work-time" /> mins
             </a>
             <div id="btns">
-                <div class="dropdown is-hoverable" id="ambient-menu">
+                <div class="dropdown is-active" id="ambient-menu">
                     <div class="dropdown-trigger">
                         <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu4">
                             <span>Ambient Sound</span>
@@ -66,31 +67,33 @@
                             </div>
                             <hr class="dropdown-divider">
                             <a id="ambient-storm" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-rainy-thunder prefix"></i>
                                 Storm
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-waves" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-wave prefix"></i>
                                 Waves
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-stream" class="dropdown-item ambient-sound">
-                                Waterfall
+                                <i class="icofont icofont-water-drop prefix"></i>
+                                Stream
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-street" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-car prefix"></i>
                                 Busy Road
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-birds" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-bird prefix"></i>
                                 Birds
-                                <i class="fa fa-volume-up"></i>
-                            </a>
-                            <a id="ambient-cricket" class="dropdown-item ambient-sound">
-                                Crickets
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <hr class="dropdown-divider">
                             <a id="ambient-random" class="dropdown-item">
+                                <i class="icofont icofont-random prefix"></i>
                                 Random
                             </a>
                         </div>
