@@ -79,15 +79,34 @@ function stopTimer() {
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        var audioID = request.audioID;
-        var ambientSound = document.getElementById(audioID);
-        if (request.clicked == true) {
-            togglePlay(ambientSound);
-        }
+        if (request.audioID) {
+            var audioID = request.audioID;
+            var ambientSound = document.getElementById(audioID);
 
-        sendResponse({audioID: request.audioID, audioPaused: ambientSound.paused});
+            if (request.audioPause) {
+                ambientSound.pause();
+            } else if (request.audioPause === false) {
+                ambientSound.play();
+            }
+
+            if (request.clicked) {
+                togglePlay(ambientSound);
+            }
+
+            sendResponse({audioID: request.audioID, audioPaused: ambientSound.paused});
+        } else if (request.audioVolume || request.audioVolume === 0) {
+            setVolume(request.audioVolume);
+        }
     }
 )
+
+var ambientSounds = document.getElementsByTagName('audio');
+
+function setVolume(volume) {
+    for (var i=0; i<ambientSounds.length; i++) {
+        ambientSounds[i].volume = volume / 100;
+    }
+}
 
 function togglePlay(ambientSound) {
     if (ambientSound.paused) {

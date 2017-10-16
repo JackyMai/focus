@@ -60,29 +60,34 @@
                     </div>
                     <div class="dropdown-menu" role="menu">
                         <div id="ambient-dropdown" class="dropdown-content">
+                            <div id="ambient-controls" class="dropdown-item">
+                                <a id="ambient-mute" class="fa fa-volume-up fa-fw fa-2x"></a>
+                                <input id="ambient-slider" type="range" min="0" max="100" value="70" step="1">
+                            </div>
+                            <hr class="dropdown-divider">
                             <a id="ambient-storm" class="dropdown-item ambient-sound">
                                 Storm
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-waves" class="dropdown-item ambient-sound">
                                 Waves
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-stream" class="dropdown-item ambient-sound">
                                 Waterfall
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-street" class="dropdown-item ambient-sound">
                                 Busy Road
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-birds" class="dropdown-item ambient-sound">
                                 Birds
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-cricket" class="dropdown-item ambient-sound">
                                 Crickets
-                                <i class='fa fa-volume-up'></i>
+                                <i class="fa fa-volume-up"></i>
                             </a>
                             <hr class="dropdown-divider">
                             <a id="ambient-random" class="dropdown-item">
@@ -101,6 +106,7 @@
   <!-- Initialised the various scripts used-->
   <script type="text/javascript" src="lib/chart.min.js"></script>
   <script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/ambient-sound.js"></script>
   <script type="text/javascript" src="js/work-break.js"></script>
   <script type="text/javascript" src="js/website-history.js"></script>
 </html>

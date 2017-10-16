@@ -130,3 +130,12 @@ html, body {
 .select:not(.is-multiple)::after {
     z-index: auto;
 }
+
+#ambient-controls {
+    display: flex;
+    align-items: center;
+}
+
+#ambient-mute {
+    margin-right: 8px;
+}
