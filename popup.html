@@ -50,7 +50,7 @@
                 <input type="number" id="work-time" /> mins
             </a>
             <div id="btns">
-                <div class="dropdown is-active" id="ambient-menu">
+                <div class="dropdown is-hoverable" id="ambient-menu">
                     <div class="dropdown-trigger">
                         <button class="button is-primary" aria-haspopup="true" aria-controls="dropdown-menu4">
                             <span>Ambient Sound</span>
@@ -66,9 +66,19 @@
                                 <input id="ambient-slider" type="range" min="0" max="100" value="70" step="1">
                             </div>
                             <hr class="dropdown-divider">
+                            <a id="ambient-rain" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-rainy prefix"></i>
+                                Light Rain
+                                <i class="fa fa-volume-up"></i>
+                            </a>
                             <a id="ambient-storm" class="dropdown-item ambient-sound">
                                 <i class="icofont icofont-rainy-thunder prefix"></i>
-                                Storm
+                                Thunderstorm
+                                <i class="fa fa-volume-up"></i>
+                            </a>
+                            <a id="ambient-wind" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-wind prefix"></i>
+                                Wind
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <a id="ambient-waves" class="dropdown-item ambient-sound">
@@ -81,14 +91,24 @@
                                 Stream
                                 <i class="fa fa-volume-up"></i>
                             </a>
-                            <a id="ambient-street" class="dropdown-item ambient-sound">
-                                <i class="icofont icofont-car prefix"></i>
-                                Busy Road
-                                <i class="fa fa-volume-up"></i>
-                            </a>
                             <a id="ambient-birds" class="dropdown-item ambient-sound">
                                 <i class="icofont icofont-bird prefix"></i>
                                 Birds
+                                <i class="fa fa-volume-up"></i>
+                            </a>
+                            <a id="ambient-fireplace" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-fire prefix"></i>
+                                Fireplace
+                                <i class="fa fa-volume-up"></i>
+                            </a>
+                            <a id="ambient-cafe" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-coffee-mug prefix"></i>
+                                Café
+                                <i class="fa fa-volume-up"></i>
+                            </a>
+                            <a id="ambient-street" class="dropdown-item ambient-sound">
+                                <i class="icofont icofont-car prefix"></i>
+                                Busy Road
                                 <i class="fa fa-volume-up"></i>
                             </a>
                             <hr class="dropdown-divider">
