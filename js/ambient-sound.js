@@ -36,15 +36,39 @@ function setAudioStatus(targetID, pause) {
 // Randomly toggles the play status of one of the ambient sounds
 function onRandomBtnClick(event) {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
-    var index = Math.random() * (ambientSounds.length - 1) + 1;
-    var targetID = ambientSounds[parseInt(index)].id;
-
+    
+    // Pause all audios
     for(var i=0; i<ambientSounds.length; i++) {
         var id = ambientSounds[i].id;
         setAudioStatus(id, true);
     }
 
-    setAudioStatus(targetID, false);
+    // Randomly choose 2 or 3 ambient sounds
+    var max = 3;
+    var min = 2;
+    var choose = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Create list with number in ascending order
+    var list = [];
+    for (var i=0; i<ambientSounds.length; i++) {
+        list.push(i);
+    }
+
+    // Randomly shuffle the arary
+    for (var i=ambientSounds.length-1; i>=0; i--) {
+        var random = Math.floor(Math.random()*(i+1));
+        var randomIndex = list[random];
+
+        list[random] = list[i];
+        list[i] = randomIndex;
+    }
+
+    // Pop the first 2 or 3 element from the list
+    for (var i=0; i<choose; i++) {
+        var index = list.pop();
+        var targetID = ambientSounds[index].id;
+        setAudioStatus(targetID, false);
+    }
 }
 
 /* Mute Button */
