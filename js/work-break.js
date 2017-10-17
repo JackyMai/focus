@@ -88,6 +88,7 @@ function toggleCycle() {
         bg.stopTimer();
 
         updatePieChartData();
+        pauseAllAudio();
     }
 
     refresh();
