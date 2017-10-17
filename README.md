@@ -27,11 +27,10 @@ Ida & Christina: Internet usage (work cycle, weekly, monthly & daily pie chart) 
 
 ## Instructions
 1. Download this repository `git clone https://github.com/JackyMai/focus.git` <br />
-2. Visit [this URL ](chrome://extensions) in your Google Chrome browser
-3. Select **Extensions** under the **More Tools** menu
-4. Enable **Developer mode**
-5. Click **Load unpacked extension** and navigate to the appropriate Focus directory
-6. Click **Update extensions now** and **Reload** under the extensions tab
+2. Go to the URL `chrome://extensions` in your Google Chrome browser
+3. Enable **Developer mode**
+4. Click **Load unpacked extension** and navigate to the Focus directory on your computer, and select it
+5. Click **Update extensions now** and **Reload** under the extensions tab
 
 ## How to use
 
