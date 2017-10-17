@@ -29,11 +29,6 @@ function refresh() {
         $('#goal').html(" / " + bg.workTime + ":00");
         $('#timer-progress').show();
     } else {
-        // when the cycle is stopped, update the current work cycle to have an end time of now
-        if (bg.WORK_CYCLE_START){
-            WORK_CYCLE_END = (new Date).getTime();
-            bg.WORK_CYCLE_END = WORK_CYCLE_END;
-        }
         $('#timer').hide();
         $('#goal').hide();
         $('#time-input').show();

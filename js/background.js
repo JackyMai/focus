@@ -51,6 +51,8 @@ function setTimer() {
         if (min == 00 && sec == 00) {
             loadTimer = false;
 
+            WORK_CYCLE_END = (new Date).getTime();
+
             // Send done notification
             chrome.browserAction.setBadgeText({text: ''});
             chrome.notifications.create({
