@@ -12,12 +12,12 @@ The overall goal for our project is to deploy motivational strategies to allow u
 How can a user effectively limit and/or keep track of their internet usage over a certain amount of time?
 
 ## Group 4B Members
-| Name              | Github Username |
-| ----------------- | --------------- |
-| Ida De Smet       | @idaknow        |
-| Christina Bell    | @ChristinaBell  |
-| Jinye (Jacky) Mai | @JackyMai       |
-| Sha (Ciel) Luo    | @Is-morning     |
+| Name              | Github Username                                    |
+| ----------------- | -------------------------------------------------- |
+| Ida De Smet       | [@idaknow](https://github.com/idaknow)             |
+| Christina Bell    | [@ChristinaBell](https://github.com/ChristinaBell) |
+| Jinye (Jacky) Mai | [@JackyMai](https://github.com/JackyMai)           |
+| Sha (Ciel) Luo    | [@Is-morning](https://github.com/ls-morning)       |
 
 #### Implementation Contributions
 
