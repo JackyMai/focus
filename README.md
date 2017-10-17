@@ -11,20 +11,19 @@ The overall goal for our project is to deploy motivational strategies to allow u
 How can a user effectively limit and/or keep track of their internet usage over a certain amount of time?
 
 ## Group 4B Members
-| Name              | Github Username |
-| ----------------- | --------------- |
-| Ida De Smet       | @idaknow        |
-| Christina Bell    | @ChristinaBell  |
-| Jinye (Jacky) Mai | @JackyMai       |
-| Sha (Ciel) Luo    | @Is-morning     |
+| Name              | Github Username                                    |
+| ----------------- | -------------------------------------------------- |
+| Ida De Smet       | [@idaknow](https://github.com/idaknow)             |
+| Christina Bell    | [@ChristinaBell](https://github.com/ChristinaBell) |
+| Jinye (Jacky) Mai | [@JackyMai](https://github.com/JackyMai)           |
+| Sha (Ciel) Luo    | [@Is-morning](https://github.com/ls-morning)       |
 
 ## Instructions
-1. Download this repository `git clone https://github.com/JackyMai/focus.git` <br />
-2. Visit [this URL ](chrome://extensions) in your Google Chrome browser
-3. Select **Extensions** under the **More Tools** menu
-4. Enable **Developer mode **
-5. Click **Load unpacked extension** and navigate to the appropriate Focus directory
-6. Click Reload under the extension
+1. Clone this repository `git clone https://github.com/JackyMai/focus.git`
+2. Open the **Extensions** page under the **More Tools** menu in Google Chrome
+3. Enable **Developer mode** located at the top right hand corner
+4. Click **Load unpacked extension** and navigate to the appropriate Focus directory
+5. Click **Reload** under the extension
 
 ## How to use
 ### View Internet Usage 
