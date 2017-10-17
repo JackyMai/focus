@@ -2,6 +2,13 @@ html, body {
     width: 600px;
 }
 
+.chart-legend li {
+    width: 230px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .chart-legend li span{
     display: inline-block;
     width: 40px;
@@ -9,11 +16,11 @@ html, body {
 }
 
 #js-legend {
-  position: absolute;
-  margin-right: 0px;
-  right: 15px;
-  top: 180px;
-  font-size: 16px;
+    position: absolute;
+    margin-right: 0px;
+    right: 16px;
+    top: 180px;
+    font-size: 16px;
 }
 
 #data-module {
@@ -33,8 +40,8 @@ html, body {
 #top-websites-canvas{
     width: 300px !important;
     height: 300px !important;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 #date-select-box{
