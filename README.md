@@ -40,7 +40,7 @@ Ida & Christina: Internet usage (work cycle, weekly, monthly & daily pie chart) 
 ### View Internet Usage
 
 Use the dropdown menu in the bottom left, under the list of websites, to choose the timeframe shown. <br />
-Hover over the pie char to view number of visits. <br />
+Hover over the pie chart to view number of visits. <br />
 
 ### Work Cycle
 
