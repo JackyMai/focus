@@ -63,6 +63,7 @@ function setTimer() {
 
             toggleVal = "Start";
             main = "Work done";
+            chrome.runtime.sendMessage({timerStopped: true});
         }
 
         setTimeout(setTimer, 1000);

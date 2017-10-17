@@ -33,16 +33,21 @@ function setAudioStatus(targetID, pause) {
     });
 }
 
-// Randomly toggles the play status of one of the ambient sounds
-function onRandomBtnClick(event) {
+function pauseAllAudio() {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     
-    // Pause all audios
     for(var i=0; i<ambientSounds.length; i++) {
         var id = ambientSounds[i].id;
         setAudioStatus(id, true);
     }
+}
 
+// Randomly toggles the play status of one of the ambient sounds
+function onRandomBtnClick(event) {
+    var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
+
+    pauseAllAudio();
+    
     // Randomly choose 2 or 3 ambient sounds
     var max = 3;
     var min = 2;
@@ -156,6 +161,14 @@ function attachListeners() {
 
     document.getElementById('ambient-random').addEventListener('click', onRandomBtnClick);
 }
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.timerStopped) {
+            pauseAllAudio();
+        }
+    }
+)
 
 window.addEventListener('load', attachListeners);
 refreshAudioStatus();
