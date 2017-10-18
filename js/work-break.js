@@ -1,3 +1,8 @@
+/*
+This file contains the functionality for timing, completing and stopping a work cycle
+*/
+
+
 const MIN_WORK_PERIOD = 1;
 var WORK_CYCLE_START;  // Default value for the past work cycle
 var WORK_CYCLE_END;  // Default value for the past work cycle
@@ -81,7 +86,6 @@ function toggleCycle() {
 
         pauseAllAudio();
     }
-
     refresh();
 }
 

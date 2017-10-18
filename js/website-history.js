@@ -1,11 +1,18 @@
-// Initialised variables
-var requestValue = 0; // variable keeps track of whether all info has been received, and whether you can load the data onto the pie chart
+/*
+This file contains the functionality for loading the pie chart to display the website history
+*/
+
+// Variable to keep track of whether all info has been received, and whether you can load the data onto the pie chart
+var requestValue = 0;
 
 // Function to add the current work cycle value to the drop down options
 function addWorkCycleToDropDown(){
+    // get the most recent work cycle start and end time from the background page
     var bg = chrome.extension.getBackgroundPage();
     start = bg.WORK_CYCLE_START;
     end = bg.WORK_CYCLE_END;
+
+    // If both the start and end time have been set (at least one work cycle completed) then add the work cycle to the drop down
     if (start && end){
         bg.updateDropDown = false;
 
@@ -52,7 +59,7 @@ function updatePieChartData(){
         start = (new Date).getTime() - 1000 * 60 * 60 * 24 * 30;
         end = (new Date).getTime();
     }
-    // Re-calculate the history values
+    // Re-calculate the history values using the appropriate start and end times
     updateHistory(start, end);
 
 }
@@ -148,9 +155,8 @@ function sortList(){
 // This function loads the data onto the piechart
 function loadPieChart(){
 
-
+    // sort the list of visited websites
 	sortedList = sortList();
-
 
     // check to ensure there is website data to display to the user
     // if not - display no data message to user
@@ -181,6 +187,7 @@ function loadPieChart(){
         var canvas = document.getElementById("top-websites-canvas");
         var ctx = canvas.getContext('2d');
 
+        // draw the pie chart
         var chart = new Chart(ctx, {
             type: 'pie', // create a pie chart
             data: { // The data and colour is initialised for the chart
@@ -201,14 +208,10 @@ function loadPieChart(){
               }
             }
         });
-
         // generates legend to set to div element
         document.getElementById('js-legend').innerHTML = chart.generateLegend();
-
     }
-
 }
-
 
 
 // Function to update the graph when the drop down changes the date range
