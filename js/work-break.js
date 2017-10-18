@@ -69,9 +69,7 @@ function toggleCycle() {
         bg.WORK_CYCLE_END = WORK_CYCLE_END;
 
         // If the drop down has not been updated to include work cycles then update the drop down.
-        if (bg.updateDropDown){
-            addWorkCycleToDropDown();
-        }
+        addWorkCycleToDropDown();
 
         // change appearance
         bg.toggleVal = "Start";
@@ -81,7 +79,6 @@ function toggleCycle() {
         bg.loadTimer = false;
         bg.stopTimer();
 
-        updatePieChartData();
         pauseAllAudio();
     }
 
