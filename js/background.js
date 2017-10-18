@@ -1,11 +1,10 @@
-// global variables
-var workTime = 10;
-var main = "";
-var showInput = true;
-var toggleVal = "Start";
-var loadTimer = false;
-var timer = "";
-var goal = "";
+// Global variables
+var workTime = 10; // Default work time
+var toggleVal = "Start"; // Text shown on the toggle button
+var loadTimer = false; // Handle the timer when it is true
+var timer = ""; // Text of timer
+var goal = ""; // Goal work time
+var past = 0; // Past time proportion = Past time / Goal work time 
 
 // Variables to keep track of the start and end times of the most recent work cycle
 var WORK_CYCLE_START;
@@ -13,42 +12,44 @@ var WORK_CYCLE_END;
 
 var updateDropDown = true;
 
-var past = 0;
 
-// set a new timer
+
+// Set a new timer
 function newTimer() {
-    //alert("new");
-    //max = workTimer*60; // work time in sec
-    //document.getElementById('timer-progress').max = max;
-
-    timer = workTime + ":00"; // initialize the timer
+    // Initialize the timer
+    timer = workTime + ":00"; 
+    // Start the timer
     setTimer();
 }
 
 
 function setTimer() {
     if (loadTimer) {
-        // handle the time
+        // Handle time
         var arr = timer.split(":");
         var min = arr[0];
         var sec = arr[1];
 
-        sec--;
+        sec--; // Decrease one second
 
         if (sec < 0) {
+            // When the second is less than 0, reset it to 59 and decrease one minute
             sec = "59";
             min--;
+
+            // Keep the min format
             if (min < 10) min = "0" + min;
         } else if (sec < 10) {
+            // Keep the sec format
             sec = "0" + sec;
         }
+
         timer = min + ":" + sec;
 
-        // past time in percent
-
+        // Calculate past time proportion
         past = 100 - ((parseInt(min)*60 + parseInt(sec)) / (workTime*60))*100;
 
-        // update status
+        // Update status
         if (min == 00 && sec == 00) {
             loadTimer = false;
 
@@ -63,10 +64,10 @@ function setTimer() {
                 message:  'It\'s time to relax!'});
 
             toggleVal = "Start";
-            main = "Work done";
             chrome.runtime.sendMessage({timerStopped: true});
         }
 
+        // Repeat handling timer in 1 second
         setTimeout(setTimer, 1000);
     }
 }
