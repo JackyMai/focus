@@ -81,24 +81,27 @@ function stopTimer() {
         message:  'Open FOCUS to start another work cycle!'});
 }
 
+// Add listener to handle all request coming from the popup html in the front-end
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.audioID) {
+        if (request.audioID) {  // Request contains an audio ID
             var audioID = request.audioID;
             var ambientSound = document.getElementById(audioID);
 
+            // Pause and play audio if there is a request for it
             if (request.audioPause) {
                 ambientSound.pause();
             } else if (request.audioPause === false) {
                 ambientSound.play();
             }
 
+            // Only toggle the play status if the user has clicked it
             if (request.clicked) {
                 togglePlay(ambientSound);
             }
 
             sendResponse({audioID: request.audioID, audioPaused: ambientSound.paused});
-        } else if (request.audioVolume || request.audioVolume === 0) {
+        } else if (request.audioVolume || request.audioVolume === 0) {  // Request contains a valid audio volume
             setVolume(request.audioVolume);
         }
     }
@@ -106,12 +109,14 @@ chrome.runtime.onMessage.addListener(
 
 var ambientSounds = document.getElementsByTagName('audio');
 
+// Change the volume for all ambient sound audios in the background html
 function setVolume(volume) {
     for (var i=0; i<ambientSounds.length; i++) {
         ambientSounds[i].volume = volume / 100;
     }
 }
 
+// Toggle between play and pause status for the provided audio element
 function togglePlay(ambientSound) {
     if (ambientSound.paused) {
         ambientSound.play();
