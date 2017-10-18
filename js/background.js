@@ -7,6 +7,7 @@ var loadTimer = false;
 var timer = "";
 var goal = "";
 
+// Variables to keep track of the start and end times of the most recent work cycle
 var WORK_CYCLE_START;
 var WORK_CYCLE_END;
 
