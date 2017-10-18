@@ -33,7 +33,6 @@ function refresh() {
         $('#goal').hide();
         $('#time-input').show();
         $('#timer-progress').hide();
-        addWorkCycleToDropDown();
     }
 }
 
