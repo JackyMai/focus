@@ -7,12 +7,15 @@ function onItemClick(event) {
     toggleAudioStatus(targetID, true);
 }
 
+// Sends a message to the background html to tell it that an action has been performed
+// on the ambient sound
 function toggleAudioStatus(targetID, action) {
     chrome.runtime.sendMessage({audioID: targetID, clicked: action}, function(response) {
         updateDropdownItem(response.audioID, response.audioPaused);
     });
 }
 
+// Update the view in the dropdown based on whether the audio is playing or not
 function updateDropdownItem(targetID, paused) {
     var ambientSound = document.getElementById(targetID);
 
@@ -27,12 +30,14 @@ function updateDropdownItem(targetID, paused) {
     }
 }
 
+// Sends a message to the background html to tell it whether to pause the audio or not
 function setAudioStatus(targetID, pause) {
     chrome.runtime.sendMessage({audioID: targetID, audioPause: pause}, function(response) {
         updateDropdownItem(response.audioID, response.audioPaused);
     });
 }
 
+// Pause all audio current playing in the dropdown menu
 function pauseAllAudio() {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     
@@ -82,6 +87,7 @@ function onMuteBtnClick() {
     applyMute();
 }
 
+// Update the speaker icon in the dropdown menu to reflect the mute status
 function setMute(mute) {
     var ambientMute = document.getElementById('ambient-mute');
 
@@ -90,16 +96,17 @@ function setMute(mute) {
         ambientMute.classList.add('fa-volume-off');
 
         MUTE = true;
-        chrome.storage.local.set({'mute': true});
+        chrome.storage.local.set({'mute': true});   // Save preference into local storage
     } else {
         ambientMute.classList.remove('fa-volume-off')
         ambientMute.classList.add('fa-volume-up');
 
         MUTE = false;
-        chrome.storage.local.set({'mute': false});
+        chrome.storage.local.set({'mute': false});  // Save preference into local storage
     }
 }
 
+// Apply the effect of the mute button tell the background html to mute/unmute all audio
 function applyMute() {
     if (MUTE) {
         $("#ambient-slider").val(0);
@@ -111,7 +118,9 @@ function applyMute() {
 }
 
 /* Volume Slider */
+// Change the volume of the ambient sounds when the volume slider is being dragged
 function onSliderDrag() {
+    // Unmute when the volume slider is being dragged
     if (MUTE) {
         setMute(false);
     }
@@ -122,6 +131,7 @@ function onSliderDrag() {
 }
 
 /* Initialize */
+// Refreshes the view of the ambient sound items when the user opens the popup html
 function refreshAudioStatus() {
     var ambientSounds = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
     for (var i=0; i<ambientSounds.length; i++) {
@@ -129,6 +139,7 @@ function refreshAudioStatus() {
     }
 }
 
+// Refreshes the view of the volume control when the user open the popup html
 function refreshVolumeControls() {
     chrome.storage.local.get(['volume', 'mute'], function(items) {
         // Retrieve volume preference from local storage
@@ -150,20 +161,24 @@ function refreshVolumeControls() {
 }
 
 /* Setup */
+// Add listeners for each of the components that will be interacted in the dropdown
+// for ambient sound
 function attachListeners() {
     document.getElementById('ambient-mute').addEventListener('click', onMuteBtnClick);
     document.getElementById('ambient-slider').addEventListener('input', onSliderDrag);
 
     var dropdownItems = document.getElementById('ambient-dropdown').getElementsByClassName('ambient-sound');
-    for (var i = 0; i < dropdownItems.length; i++) {  // Excludes random button
+    for (var i = 0; i < dropdownItems.length; i++) {
         dropdownItems[i].addEventListener('click', onItemClick);
     }
 
     document.getElementById('ambient-random').addEventListener('click', onRandomBtnClick);
 }
 
+// Attach listener for communication between the popup and background html
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        // If the timer stops, pause all ambient sounds
         if(request.timerStopped) {
             pauseAllAudio();
         }
